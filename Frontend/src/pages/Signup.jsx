@@ -33,6 +33,7 @@ export default function SignupPage() {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 
   const programs = ["B.Tech", "M.Tech", "PhD", "MS"];
   const currentYear = new Date().getFullYear();
@@ -120,18 +121,24 @@ export default function SignupPage() {
 
       if (res.ok) {
         setShowSuccessPopup(true);
+        setUserEmail(formData.email);
+
         setTimeout(() => {
           window.location.href = "/";
         }, 2000);
       } else {
         setErrorMessage(data.message || "Signup failed. Please try again.");
         setShowErrorPopup(true);
+        setUserEmail(formData.email);
+
       }
     } catch (error) {
       console.error("Signup error:", error);
       setErrorMessage(
         "Network error. Please check if the server is running on localhost:5000"
       );
+        setUserEmail(formData.email);
+
       setShowErrorPopup(true);
     } finally {
       setIsLoading(false);
