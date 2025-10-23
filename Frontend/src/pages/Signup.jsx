@@ -120,6 +120,7 @@ export default function SignupPage() {
       const data = await res.json();
 
       if (res.ok) {
+        localStorage.setItem("token", data.token);
         setShowSuccessPopup(true);
         setUserEmail(formData.email);
 
