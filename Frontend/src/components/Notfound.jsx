@@ -138,7 +138,7 @@ export default function NotFound() {
         <div className="absolute -bottom-10 -right-10 w-16 h-16 bg-pink-300 rounded-full opacity-20 animate-ping" style={{ animationDuration: '4s', animationDelay: '1s' }} />
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes fade-in {
           from {
             opacity: 0;

@@ -20,10 +20,7 @@ function BlogPlatform() {
   const [view, setView] = useState("allBlogs");
   const [editingBlogId, setEditingBlogId] = useState(null);
 
-  const [blogForm, setBlogForm] = useState({
-    title: "",
-    content: "",
-  });
+  const [blogForm, setBlogForm] = useState({ title: "", content: "" });
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [blogs, setBlogs] = useState([]);
   const [myBlogs, setMyBlogs] = useState([]);
@@ -31,42 +28,36 @@ function BlogPlatform() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  // ✅ Fetch current user from token
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      fetchCurrentUser(token);
-    }
+    if (token) fetchCurrentUser(token);
   }, []);
 
   useEffect(() => {
     if (isAuthenticated) {
       fetchAllBlogs();
-      if (view === "myBlogs") {
-        fetchMyBlogs();
-      }
+      if (view === "myBlogs") fetchMyBlogs();
     }
   }, [isAuthenticated, view]);
 
   const fetchCurrentUser = async (token) => {
     try {
-      const response = await fetch(`${API_URL}/profile`, {
+      const res = await fetch(`${API_URL}/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (response.ok) {
-        const data = await response.json();
+      if (res.ok) {
+        const data = await res.json();
         setCurrentUser(data.user);
         setIsAuthenticated(true);
-      } else {
-        localStorage.removeItem("token");
-      }
+      } else localStorage.removeItem("token");
     } catch (err) {
       console.error("Error fetching user:", err);
     }
   };
 
   const handleFileSelect = (e) => {
-    const files = Array.from(e.target.files);
-    setSelectedFiles((prev) => [...prev, ...files]);
+    setSelectedFiles([...selectedFiles, ...Array.from(e.target.files)]);
   };
 
   const removeFile = (index) => {
@@ -75,62 +66,56 @@ function BlogPlatform() {
 
   const fetchAllBlogs = async () => {
     try {
-      const response = await fetch(`${API_URL}/blogs`);
-      if (response.ok) {
-        const data = await response.json();
-        setBlogs(data.blogs);
+      const res = await fetch(`${API_URL}/blogs`);
+      if (res.ok) {
+        const data = await res.json();
+        setBlogs(data.blogs || []);
       }
     } catch (err) {
-      console.error("Error fetching blogs:", err);
+      console.error("Fetch blogs error:", err);
     }
   };
 
   const fetchMyBlogs = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`${API_URL}/blogs/my-blogs`, {
+      const res = await fetch(`${API_URL}/blogs/my-blogs`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (response.ok) {
-        const data = await response.json();
-        setMyBlogs(data.blogs);
+      if (res.ok) {
+        const data = await res.json();
+        setMyBlogs(data.blogs || []);
       }
     } catch (err) {
-      console.error("Error fetching my blogs:", err);
+      console.error("Fetch my blogs error:", err);
     }
   };
 
   const handleCreateBlog = async () => {
+    setLoading(true);
     setError("");
     setSuccess("");
-    setLoading(true);
 
     try {
       const token = localStorage.getItem("token");
       const formData = new FormData();
       formData.append("title", blogForm.title);
       formData.append("content", blogForm.content);
-      selectedFiles.forEach((file) => {
-        formData.append("files", file);
-      });
+      selectedFiles.forEach((file) => formData.append("files", file));
 
-      const response = await fetch(`${API_URL}/blogs`, {
+      const res = await fetch(`${API_URL}/blogs`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setSuccess("Blog posted successfully!");
+      const data = await res.json();
+      if (res.ok) {
+        setSuccess("✅ Blog created successfully!");
         setBlogForm({ title: "", content: "" });
         setSelectedFiles([]);
         fetchAllBlogs();
-        setTimeout(() => {
-          setView("allBlogs");
-          setSuccess("");
-        }, 1500);
+        setView("allBlogs");
       } else {
         setError(data.message || "Failed to create blog");
       }
@@ -141,53 +126,65 @@ function BlogPlatform() {
     }
   };
 
-  const handleEditBlog = async (blogId) => {
+  const handleEditBlog = async (blogId, removeFileIds = []) => {
+    setLoading(true);
     setError("");
     setSuccess("");
-    setLoading(true);
 
     try {
       const token = localStorage.getItem("token");
       const formData = new FormData();
       formData.append("title", blogForm.title);
       formData.append("content", blogForm.content);
-      selectedFiles.forEach((file) => {
-        formData.append("files", file);
-      });
+      formData.append("removeFileIds", JSON.stringify(removeFileIds));
+      selectedFiles.forEach((file) => formData.append("files", file));
 
-      const response = await fetch(`${API_URL}/blogs/${blogId}`, {
+      const res = await fetch(`${API_URL}/blogs/${blogId}`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setSuccess("Blog updated successfully!");
+      const data = await res.json();
+      if (res.ok) {
+        setSuccess("✅ Blog updated successfully!");
+        setEditingBlogId(null);
         setBlogForm({ title: "", content: "" });
         setSelectedFiles([]);
-        setEditingBlogId(null);
         fetchAllBlogs();
         fetchMyBlogs();
-        setTimeout(() => setSuccess(""), 3000);
-      } else {
-        setError(data.message || "Failed to update blog");
-      }
+      } else setError(data.message);
     } catch (err) {
-      setError("Network error. Please try again.");
+      setError("Network error while updating blog");
     } finally {
       setLoading(false);
     }
   };
 
+  const handleDeleteBlog = async (id) => {
+    if (!window.confirm("Delete this blog permanently?")) return;
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${API_URL}/blogs/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        setSuccess("🗑️ Blog deleted");
+        fetchAllBlogs();
+        fetchMyBlogs();
+      } else {
+        const data = await res.json();
+        setError(data.message || "Failed to delete blog");
+      }
+    } catch {
+      setError("Server error while deleting");
+    }
+  };
+
   const startEditing = (blog) => {
     setEditingBlogId(blog._id);
-    setBlogForm({
-      title: blog.title,
-      content: blog.content,
-    });
-    setSelectedFiles([]);
+    setBlogForm({ title: blog.title, content: blog.content });
   };
 
   const cancelEditing = () => {
@@ -196,27 +193,8 @@ function BlogPlatform() {
     setSelectedFiles([]);
   };
 
-  const handleDeleteBlog = async (blogId) => {
-    if (!window.confirm("Are you sure you want to delete this blog?")) return;
-    try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(`${API_URL}/blogs/${blogId}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      if (response.ok) {
-        setSuccess("Blog deleted successfully!");
-        fetchAllBlogs();
-        fetchMyBlogs();
-        setTimeout(() => setSuccess(""), 3000);
-      }
-    } catch (err) {
-      setError("Failed to delete blog");
-    }
-  };
-
   const getFileIcon = (mimetype) => {
+    if (!mimetype) return <File className="w-4 h-4" />;
     if (mimetype.startsWith("image/")) return <Image className="w-4 h-4" />;
     if (mimetype === "application/pdf") return <FileText className="w-4 h-4" />;
     return <File className="w-4 h-4" />;
@@ -224,7 +202,7 @@ function BlogPlatform() {
 
   const renderBlogCard = (blog) => {
     const isEditing = editingBlogId === blog._id;
-    const isOwner = blog.author.id === currentUser?._id;
+    const isOwner = blog.author?.id === currentUser?._id;
 
     if (isEditing) {
       return (
@@ -311,7 +289,6 @@ function BlogPlatform() {
         </div>
       );
     }
-
     return (
       <div
         key={blog._id}
@@ -363,12 +340,13 @@ function BlogPlatform() {
           {blog.content}
         </p>
 
-        {blog.files && blog.files.length > 0 && (
+        {blog.files?.length > 0 && (
           <div className="border-t border-gray-200 pt-4 mt-4">
             <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
               <FileText className="w-4 h-4" />
               Attachments ({blog.files.length})
             </h4>
+
             <div className="space-y-4">
               {blog.files.filter((file) => file.mimetype.startsWith("image/"))
                 .length > 0 && (
@@ -378,13 +356,13 @@ function BlogPlatform() {
                     .map((file, index) => (
                       <a
                         key={index}
-                        href={`http://localhost:5000${file.path}`}
+                        href={file.url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="group relative overflow-hidden rounded-lg border-2 border-gray-200 hover:border-indigo-400 transition-all"
                       >
                         <img
-                          src={`http://localhost:5000${file.path}`}
+                          src={file.url}
                           alt={file.originalName}
                           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                         />
@@ -406,7 +384,7 @@ function BlogPlatform() {
                     .map((file, index) => (
                       <a
                         key={index}
-                        href={`http://localhost:5000${file.path}`}
+                        href={file.url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-3 bg-gray-50 px-4 py-3 rounded-lg hover:bg-indigo-50 hover:border-indigo-300 border-2 border-transparent transition-all group"
