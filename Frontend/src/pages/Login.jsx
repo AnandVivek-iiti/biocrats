@@ -1,32 +1,44 @@
-import { useState } from 'react';
-import { Lock, Mail, Eye, EyeOff, Loader2, CheckCircle, X,AlertCircle ,  ArrowLeft,LogIn, User, Settings, Bell } from 'lucide-react';
-
-
+import { useState } from "react";
+import {
+  Lock,
+  Mail,
+  Eye,
+  EyeOff,
+  Loader2,
+  CheckCircle,
+  X,
+  AlertCircle,
+  ArrowLeft,
+  LogIn,
+  User,
+  Settings,
+  Bell,
+} from "lucide-react";
 
 export default function Login() {
-  const [currentPage, setCurrentPage] = useState('login');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [currentPage, setCurrentPage] = useState("login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
+  const [userEmail, setUserEmail] = useState("");
   const getUserInitial = (email) => {
-    return email ? email.charAt(0).toUpperCase() : 'U';
+    return email ? email.charAt(0).toUpperCase() : "U";
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/login', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       });
@@ -40,11 +52,11 @@ export default function Login() {
 
         setTimeout(() => {
           setShowSuccessPopup(false);
-          setCurrentPage('/');
+       window.location.href = "/";
         }, 2000);
       } else {
         setShowErrorPopup(true);
-        setError(data.message || 'Login failed. Please try again.');
+        setError(data.message || "Login failed. Please try again.");
       }
     } catch (err) {
       setUserEmail(email);
@@ -52,19 +64,14 @@ export default function Login() {
 
       setTimeout(() => {
         setShowSuccessPopup(false);
-        setCurrentPage('/');
+
+        window.location.href = "/";
       }, 2000);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleLogout = () => {
-    setUserEmail('');
-    setEmail('');
-    setPassword('');
-    setCurrentPage('login');
-  };
   const closeSuccessPopup = () => {
     setShowSuccessPopup(false);
     window.location.href = "/";
@@ -72,9 +79,8 @@ export default function Login() {
 
   const closeErrorPopup = () => {
     setShowErrorPopup(false);
-     window.location.href = "/";
+    window.location.href = "/";
   };
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
@@ -96,7 +102,8 @@ export default function Login() {
                 Login Successful!
               </h2>
               <p className="text-gray-600">
-                Welcome back, {email.split('@')[0]}! Redirecting you to the home page...
+                Welcome back, {email.split("@")[0]}! Redirecting you to the home
+                page...
               </p>
 
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl mt-4">
@@ -108,7 +115,7 @@ export default function Login() {
                   </div>
                   <div className="text-left flex-1 min-w-0">
                     <p className="text-sm font-semibold text-gray-900 truncate">
-                      {email.split('@')[0]}
+                      {email.split("@")[0]}
                     </p>
                     <p className="text-xs text-gray-600 truncate">{email}</p>
                   </div>
@@ -126,9 +133,7 @@ export default function Login() {
               <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-red-400 to-rose-500 rounded-full mb-2 shadow-lg">
                 <AlertCircle className="w-12 h-12 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900">
-                Login Failed
-              </h2>
+              <h2 className="text-2xl font-bold text-gray-900">Login Failed</h2>
               <p className="text-gray-600 text-sm">{error}</p>
               <div className="flex gap-3 mt-6">
                 <button
@@ -151,16 +156,16 @@ export default function Login() {
 
       <div className="w-full max-w-md relative">
         <div className="bg-white rounded-2xl shadow-2xl p-8 space-y-6 backdrop-blur-sm bg-opacity-95 border border-gray-100">
-            <button
-              onClick={() => {
-                console.log('Manual redirect to home');
-                window.location.href = '/';
-              }}
-              className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors group"
-              title="Go to Home"
-            >
-              <X className="w-5 h-5 text-gray-600 group-hover:text-gray-800" />
-            </button>
+          <button
+            onClick={() => {
+              console.log("Manual redirect to home");
+              window.location.href = "/";
+            }}
+            className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors group"
+            title="Go to Home"
+          >
+            <X className="w-5 h-5 text-gray-600 group-hover:text-gray-800" />
+          </button>
           <div className="text-center space-y-2">
             <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl mx-auto flex items-center justify-center shadow-lg">
               <Lock className="w-8 h-8 text-white" />
@@ -171,7 +176,10 @@ export default function Login() {
 
           <div className="space-y-5">
             <div className="space-y-2">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Email Address
               </label>
               <div className="relative">
@@ -189,14 +197,17 @@ export default function Login() {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
                   id="password"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -208,11 +219,14 @@ export default function Login() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
                 </button>
               </div>
             </div>
-
 
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
@@ -236,19 +250,18 @@ export default function Login() {
             </button>
           </div>
 
-
-
           <p className="text-center text-sm text-gray-600">
-            Don't have an account?{' '}
-            <a href="/signup" className="text-blue-600 hover:text-blue-700 font-medium transition-colors">
+            Don't have an account?{" "}
+            <a
+              href="/signup"
+              className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
+            >
               Sign up
             </a>
           </p>
+        </div>
 
-
-      </div>
-
-      <style>{`
+        <style>{`
         @keyframes scale-in {
           from {
             opacity: 0;
@@ -290,7 +303,7 @@ export default function Login() {
           animation: progress 2s linear;
         }
       `}</style>
-    </div>
+      </div>
     </div>
   );
 }
@@ -550,8 +563,6 @@ export default function Login() {
 //                 </p>
 //               )}
 //             </div>
-
-
 
 //             <button
 //               type="button"
