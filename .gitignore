@@ -11,7 +11,6 @@ lerna-debug.log*
 node_modules/
 **/node_modules/
 
-
 # Build outputs
 dist/
 dist-ssr/
@@ -35,4 +34,6 @@ coverage/
 
 # Local files
 *.local
-**/./Backend/Folder.md
+
+# Ignore specific README file
+README-ME.MD

@@ -763,6 +763,8 @@ const BiocatsEventsPage = () => {
     const token = localStorage.getItem("token");
     if (!token) {
       setIsAdmin(false);
+         setEvents([]);
+        setLoading(false);
       return;
     }
 
@@ -787,6 +789,12 @@ const BiocatsEventsPage = () => {
 
   const fetchEvents = async () => {
     try {
+        const token = localStorage.getItem("token");
+      if (!token) {
+        setEvents([]);
+        setLoading(false);
+        return;
+      }
       setLoading(true);
       setError("");
       const response = await fetch(`${API_URL}/events`);
