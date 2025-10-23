@@ -17,7 +17,6 @@ import Signup from "./pages/Signup";
 import photo from "./assets/biobg.jpg"
 import Blogs from "./pages/Blogs";
 function MainPage() {
-  // ✅ smooth scroll code yahin rakho
   useEffect(() => {
     const handleSmoothScroll = (e) => {
       const anchor = e.target.closest("a");
@@ -83,6 +82,8 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/alumni" element={<AlumniDirectory />} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

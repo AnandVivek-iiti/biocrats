@@ -1,28 +1,38 @@
+import React, { useState, useEffect } from "react";
+import {
+  Upload,
+  FileText,
+  Image,
+  File,
+  X,
+  Plus,
+  User,
+  Trash2,
+  Edit2,
+  Save,
+} from "lucide-react";
 
-import React, { useState, useEffect } from 'react';
-import { Upload, FileText, Image, File, X, Plus,  User, Trash2, Edit2, Save } from 'lucide-react';
-
-const API_URL = 'http://localhost:5000/api';
+const API_URL = "http://localhost:5000/api";
 
 function BlogPlatform() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
-  const [view, setView] = useState('allBlogs');
+  const [view, setView] = useState("allBlogs");
   const [editingBlogId, setEditingBlogId] = useState(null);
 
   const [blogForm, setBlogForm] = useState({
-    title: '',
-    content: ''
+    title: "",
+    content: "",
   });
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [blogs, setBlogs] = useState([]);
   const [myBlogs, setMyBlogs] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       fetchCurrentUser(token);
     }
@@ -31,7 +41,7 @@ function BlogPlatform() {
   useEffect(() => {
     if (isAuthenticated) {
       fetchAllBlogs();
-      if (view === 'myBlogs') {
+      if (view === "myBlogs") {
         fetchMyBlogs();
       }
     }
@@ -40,27 +50,27 @@ function BlogPlatform() {
   const fetchCurrentUser = async (token) => {
     try {
       const response = await fetch(`${API_URL}/profile`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
         const data = await response.json();
         setCurrentUser(data.user);
         setIsAuthenticated(true);
       } else {
-        localStorage.removeItem('token');
+        localStorage.removeItem("token");
       }
     } catch (err) {
-      console.error('Error fetching user:', err);
+      console.error("Error fetching user:", err);
     }
   };
 
   const handleFileSelect = (e) => {
     const files = Array.from(e.target.files);
-    setSelectedFiles(prev => [...prev, ...files]);
+    setSelectedFiles((prev) => [...prev, ...files]);
   };
 
   const removeFile = (index) => {
-    setSelectedFiles(prev => prev.filter((_, i) => i !== index));
+    setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
   const fetchAllBlogs = async () => {
@@ -71,101 +81,101 @@ function BlogPlatform() {
         setBlogs(data.blogs);
       }
     } catch (err) {
-      console.error('Error fetching blogs:', err);
+      console.error("Error fetching blogs:", err);
     }
   };
 
   const fetchMyBlogs = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const response = await fetch(`${API_URL}/blogs/my-blogs`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
         const data = await response.json();
         setMyBlogs(data.blogs);
       }
     } catch (err) {
-      console.error('Error fetching my blogs:', err);
+      console.error("Error fetching my blogs:", err);
     }
   };
 
   const handleCreateBlog = async () => {
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
     setLoading(true);
 
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const formData = new FormData();
-      formData.append('title', blogForm.title);
-      formData.append('content', blogForm.content);
-      selectedFiles.forEach(file => {
-        formData.append('files', file);
+      formData.append("title", blogForm.title);
+      formData.append("content", blogForm.content);
+      selectedFiles.forEach((file) => {
+        formData.append("files", file);
       });
 
       const response = await fetch(`${API_URL}/blogs`, {
-        method: 'POST',
+        method: "POST",
         headers: { Authorization: `Bearer ${token}` },
-        body: formData
+        body: formData,
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setSuccess('Blog posted successfully!');
-        setBlogForm({ title: '', content: '' });
+        setSuccess("Blog posted successfully!");
+        setBlogForm({ title: "", content: "" });
         setSelectedFiles([]);
         fetchAllBlogs();
         setTimeout(() => {
-          setView('allBlogs');
-          setSuccess('');
+          setView("allBlogs");
+          setSuccess("");
         }, 1500);
       } else {
-        setError(data.message || 'Failed to create blog');
+        setError(data.message || "Failed to create blog");
       }
     } catch (err) {
-      setError('Network error. Please try again.');
+      setError("Network error. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   const handleEditBlog = async (blogId) => {
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
     setLoading(true);
 
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const formData = new FormData();
-      formData.append('title', blogForm.title);
-      formData.append('content', blogForm.content);
-      selectedFiles.forEach(file => {
-        formData.append('files', file);
+      formData.append("title", blogForm.title);
+      formData.append("content", blogForm.content);
+      selectedFiles.forEach((file) => {
+        formData.append("files", file);
       });
 
       const response = await fetch(`${API_URL}/blogs/${blogId}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
-        body: formData
+        body: formData,
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setSuccess('Blog updated successfully!');
-        setBlogForm({ title: '', content: '' });
+        setSuccess("Blog updated successfully!");
+        setBlogForm({ title: "", content: "" });
         setSelectedFiles([]);
         setEditingBlogId(null);
         fetchAllBlogs();
         fetchMyBlogs();
-        setTimeout(() => setSuccess(''), 3000);
+        setTimeout(() => setSuccess(""), 3000);
       } else {
-        setError(data.message || 'Failed to update blog');
+        setError(data.message || "Failed to update blog");
       }
     } catch (err) {
-      setError('Network error. Please try again.');
+      setError("Network error. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -175,40 +185,40 @@ function BlogPlatform() {
     setEditingBlogId(blog._id);
     setBlogForm({
       title: blog.title,
-      content: blog.content
+      content: blog.content,
     });
     setSelectedFiles([]);
   };
 
   const cancelEditing = () => {
     setEditingBlogId(null);
-    setBlogForm({ title: '', content: '' });
+    setBlogForm({ title: "", content: "" });
     setSelectedFiles([]);
   };
 
   const handleDeleteBlog = async (blogId) => {
-    if (!window.confirm('Are you sure you want to delete this blog?')) return;
+    if (!window.confirm("Are you sure you want to delete this blog?")) return;
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const response = await fetch(`${API_URL}/blogs/${blogId}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` }
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.ok) {
-        setSuccess('Blog deleted successfully!');
+        setSuccess("Blog deleted successfully!");
         fetchAllBlogs();
         fetchMyBlogs();
-        setTimeout(() => setSuccess(''), 3000);
+        setTimeout(() => setSuccess(""), 3000);
       }
     } catch (err) {
-      setError('Failed to delete blog');
+      setError("Failed to delete blog");
     }
   };
 
   const getFileIcon = (mimetype) => {
-    if (mimetype.startsWith('image/')) return <Image className="w-4 h-4" />;
-    if (mimetype === 'application/pdf') return <FileText className="w-4 h-4" />;
+    if (mimetype.startsWith("image/")) return <Image className="w-4 h-4" />;
+    if (mimetype === "application/pdf") return <FileText className="w-4 h-4" />;
     return <File className="w-4 h-4" />;
   };
 
@@ -218,29 +228,42 @@ function BlogPlatform() {
 
     if (isEditing) {
       return (
-        <div key={blog._id} className="bg-white rounded-xl shadow-md p-6 border-2 border-indigo-500">
+        <div
+          key={blog._id}
+          className="bg-white rounded-xl shadow-md p-6 border-2 border-indigo-500"
+        >
           <h2 className="text-xl font-bold text-gray-900 mb-4">Edit Blog</h2>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Title
+              </label>
               <input
                 type="text"
                 value={blogForm.title}
-                onChange={(e) => setBlogForm({...blogForm, title: e.target.value})}
+                onChange={(e) =>
+                  setBlogForm({ ...blogForm, title: e.target.value })
+                }
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Content</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Content
+              </label>
               <textarea
                 value={blogForm.content}
-                onChange={(e) => setBlogForm({...blogForm, content: e.target.value})}
+                onChange={(e) =>
+                  setBlogForm({ ...blogForm, content: e.target.value })
+                }
                 rows={6}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Add New Attachments</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Add New Attachments
+              </label>
               <input
                 type="file"
                 multiple
@@ -251,9 +274,16 @@ function BlogPlatform() {
               {selectedFiles.length > 0 && (
                 <div className="mt-2 space-y-1">
                   {selectedFiles.map((file, index) => (
-                    <div key={index} className="flex items-center justify-between bg-gray-50 px-3 py-1 rounded text-sm">
+                    <div
+                      key={index}
+                      className="flex items-center justify-between bg-gray-50 px-3 py-1 rounded text-sm"
+                    >
                       <span>{file.name}</span>
-                      <button type="button" onClick={() => removeFile(index)} className="text-red-500">
+                      <button
+                        type="button"
+                        onClick={() => removeFile(index)}
+                        className="text-red-500"
+                      >
                         <X className="w-4 h-4" />
                       </button>
                     </div>
@@ -268,7 +298,7 @@ function BlogPlatform() {
                 className="flex-1 bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 <Save className="w-4 h-4" />
-                {loading ? 'Saving...' : 'Save Changes'}
+                {loading ? "Saving..." : "Save Changes"}
               </button>
               <button
                 onClick={cancelEditing}
@@ -283,21 +313,30 @@ function BlogPlatform() {
     }
 
     return (
-      <div key={blog._id} className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+      <div
+        key={blog._id}
+        className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow"
+      >
         <div className="flex justify-between items-start mb-4">
           <div className="flex-1">
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">{blog.title}</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">
+              {blog.title}
+            </h3>
             <div className="flex items-center gap-2 text-sm text-gray-600">
               <div className="flex items-center gap-1 bg-indigo-50 px-3 py-1 rounded-full">
                 <User className="w-4 h-4 text-indigo-600" />
-                <span className="font-medium text-indigo-700">{blog.author.name}</span>
+                <span className="font-medium text-indigo-700">
+                  {blog.author.name}
+                </span>
               </div>
               <span>•</span>
-              <span>{new Date(blog.createdAt).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })}</span>
+              <span>
+                {new Date(blog.createdAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </span>
             </div>
           </div>
           {isOwner && (
@@ -320,7 +359,9 @@ function BlogPlatform() {
           )}
         </div>
 
-        <p className="text-gray-700 whitespace-pre-wrap mb-4 leading-relaxed">{blog.content}</p>
+        <p className="text-gray-700 whitespace-pre-wrap mb-4 leading-relaxed">
+          {blog.content}
+        </p>
 
         {blog.files && blog.files.length > 0 && (
           <div className="border-t border-gray-200 pt-4 mt-4">
@@ -329,49 +370,57 @@ function BlogPlatform() {
               Attachments ({blog.files.length})
             </h4>
             <div className="space-y-4">
-              {blog.files.filter(file => file.mimetype.startsWith('image/')).length > 0 && (
+              {blog.files.filter((file) => file.mimetype.startsWith("image/"))
+                .length > 0 && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {blog.files.filter(file => file.mimetype.startsWith('image/')).map((file, index) => (
-                    <a
-                      key={index}
-                      href={`http://localhost:5000${file.path}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group relative overflow-hidden rounded-lg border-2 border-gray-200 hover:border-indigo-400 transition-all"
-                    >
-                      <img
-                        src={`http://localhost:5000${file.path}`}
-                        alt={file.originalName}
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
-                        <p className="text-white text-sm font-medium truncate">{file.originalName}</p>
-                      </div>
-                    </a>
-                  ))}
+                  {blog.files
+                    .filter((file) => file.mimetype.startsWith("image/"))
+                    .map((file, index) => (
+                      <a
+                        key={index}
+                        href={`http://localhost:5000${file.path}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative overflow-hidden rounded-lg border-2 border-gray-200 hover:border-indigo-400 transition-all"
+                      >
+                        <img
+                          src={`http://localhost:5000${file.path}`}
+                          alt={file.originalName}
+                          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                          <p className="text-white text-sm font-medium truncate">
+                            {file.originalName}
+                          </p>
+                        </div>
+                      </a>
+                    ))}
                 </div>
               )}
 
-              {blog.files.filter(file => !file.mimetype.startsWith('image/')).length > 0 && (
+              {blog.files.filter((file) => !file.mimetype.startsWith("image/"))
+                .length > 0 && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {blog.files.filter(file => !file.mimetype.startsWith('image/')).map((file, index) => (
-                    <a
-                      key={index}
-                      href={`http://localhost:5000${file.path}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-3 bg-gray-50 px-4 py-3 rounded-lg hover:bg-indigo-50 hover:border-indigo-300 border-2 border-transparent transition-all group"
-                    >
-                      <div className="text-gray-600 group-hover:text-indigo-600 transition-colors">
-                        {getFileIcon(file.mimetype)}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <span className="text-sm text-gray-700 font-medium truncate block group-hover:text-indigo-700">
-                          {file.originalName}
-                        </span>
-                      </div>
-                    </a>
-                  ))}
+                  {blog.files
+                    .filter((file) => !file.mimetype.startsWith("image/"))
+                    .map((file, index) => (
+                      <a
+                        key={index}
+                        href={`http://localhost:5000${file.path}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 bg-gray-50 px-4 py-3 rounded-lg hover:bg-indigo-50 hover:border-indigo-300 border-2 border-transparent transition-all group"
+                      >
+                        <div className="text-gray-600 group-hover:text-indigo-600 transition-colors">
+                          {getFileIcon(file.mimetype)}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <span className="text-sm text-gray-700 font-medium truncate block group-hover:text-indigo-700">
+                            {file.originalName}
+                          </span>
+                        </div>
+                      </a>
+                    ))}
                 </div>
               )}
             </div>
@@ -390,9 +439,10 @@ function BlogPlatform() {
               <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
                 <FileText className="w-6 h-6 text-white" />
               </div>
-              <h1 className="text-2xl font-bold text-gray-900">Blog Platform</h1>
+              <h1 className="text-2xl font-bold text-gray-900">
+                Blog Platform
+              </h1>
             </div>
-
           </div>
         </div>
       </header>
@@ -400,31 +450,31 @@ function BlogPlatform() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex gap-4 mb-8 bg-white p-2 rounded-xl shadow-sm">
           <button
-            onClick={() => setView('allBlogs')}
+            onClick={() => setView("allBlogs")}
             className={`flex-1 px-6 py-3 rounded-lg font-semibold transition-all ${
-              view === 'allBlogs'
-                ? 'bg-indigo-600 text-white shadow-md'
-                : 'text-gray-700 hover:bg-gray-100'
+              view === "allBlogs"
+                ? "bg-indigo-600 text-white shadow-md"
+                : "text-gray-700 hover:bg-gray-100"
             }`}
           >
             All Blogs
           </button>
           <button
-            onClick={() => setView('myBlogs')}
+            onClick={() => setView("myBlogs")}
             className={`flex-1 px-6 py-3 rounded-lg font-semibold transition-all ${
-              view === 'myBlogs'
-                ? 'bg-indigo-600 text-white shadow-md'
-                : 'text-gray-700 hover:bg-gray-100'
+              view === "myBlogs"
+                ? "bg-indigo-600 text-white shadow-md"
+                : "text-gray-700 hover:bg-gray-100"
             }`}
           >
             My Blogs
           </button>
           <button
-            onClick={() => setView('create')}
+            onClick={() => setView("create")}
             className={`flex-1 px-6 py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 ${
-              view === 'create'
-                ? 'bg-indigo-600 text-white shadow-md'
-                : 'text-gray-700 hover:bg-gray-100'
+              view === "create"
+                ? "bg-indigo-600 text-white shadow-md"
+                : "text-gray-700 hover:bg-gray-100"
             }`}
           >
             <Plus className="w-5 h-5" />
@@ -443,25 +493,35 @@ function BlogPlatform() {
           </div>
         )}
 
-        {view === 'create' && (
+        {view === "create" && (
           <div className="bg-white rounded-xl shadow-md p-8 max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Create New Blog</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              Create New Blog
+            </h2>
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Title</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Title
+                </label>
                 <input
                   type="text"
                   value={blogForm.title}
-                  onChange={(e) => setBlogForm({...blogForm, title: e.target.value})}
+                  onChange={(e) =>
+                    setBlogForm({ ...blogForm, title: e.target.value })
+                  }
                   className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
                   placeholder="Enter an engaging title..."
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Content</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Content
+                </label>
                 <textarea
                   value={blogForm.content}
-                  onChange={(e) => setBlogForm({...blogForm, content: e.target.value})}
+                  onChange={(e) =>
+                    setBlogForm({ ...blogForm, content: e.target.value })
+                  }
                   rows={10}
                   className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
                   placeholder="Share your thoughts..."
@@ -487,16 +547,23 @@ function BlogPlatform() {
                   >
                     Click to upload files
                   </label>
-                  <p className="text-sm text-gray-500 mt-2">Images, PDFs, Documents up to 10MB</p>
+                  <p className="text-sm text-gray-500 mt-2">
+                    Images, PDFs, Documents up to 10MB
+                  </p>
                 </div>
                 {selectedFiles.length > 0 && (
                   <div className="mt-4 space-y-2">
                     {selectedFiles.map((file, index) => (
-                      <div key={index} className="flex items-center justify-between bg-gray-50 px-4 py-3 rounded-lg border border-gray-200">
+                      <div
+                        key={index}
+                        className="flex items-center justify-between bg-gray-50 px-4 py-3 rounded-lg border border-gray-200"
+                      >
                         <div className="flex items-center gap-3">
                           {getFileIcon(file.type)}
                           <div>
-                            <span className="text-sm font-medium text-gray-700 block">{file.name}</span>
+                            <span className="text-sm font-medium text-gray-700 block">
+                              {file.name}
+                            </span>
                             <span className="text-xs text-gray-500">
                               {(file.size / 1024).toFixed(2)} KB
                             </span>
@@ -519,26 +586,28 @@ function BlogPlatform() {
                 disabled={loading}
                 className="w-full bg-indigo-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
               >
-                {loading ? 'Publishing...' : 'Publish Blog'}
+                {loading ? "Publishing..." : "Publish Blog"}
               </button>
             </div>
           </div>
         )}
 
-        {(view === 'allBlogs' || view === 'myBlogs') && (
+        {(view === "allBlogs" || view === "myBlogs") && (
           <div className="space-y-6">
-            {(view === 'allBlogs' ? blogs : myBlogs).length === 0 ? (
+            {(view === "allBlogs" ? blogs : myBlogs).length === 0 ? (
               <div className="bg-white rounded-xl shadow-md p-12 text-center">
                 <FileText className="w-20 h-20 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-2xl font-bold text-gray-700 mb-2">No blogs yet</h3>
+                <h3 className="text-2xl font-bold text-gray-700 mb-2">
+                  No blogs yet
+                </h3>
                 <p className="text-gray-500 text-lg">
-                  {view === 'myBlogs'
+                  {view === "myBlogs"
                     ? "You haven't created any blogs yet. Start writing!"
-                    : 'No blogs have been posted yet. Be the first!'}
+                    : "No blogs have been posted yet. Be the first!"}
                 </p>
               </div>
             ) : (
-              (view === 'allBlogs' ? blogs : myBlogs).map(renderBlogCard)
+              (view === "allBlogs" ? blogs : myBlogs).map(renderBlogCard)
             )}
           </div>
         )}

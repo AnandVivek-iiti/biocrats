@@ -1,10 +1,12 @@
-
 import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Linkedin, Mail, User, ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const AlumniDirectory = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
-
+  const navigate = useNavigate();
   const alumniData = [
     {
       id: 1,
@@ -84,7 +86,20 @@ const AlumniDirectory = () => {
       className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50"
       style={{ fontFamily: '"Public Sans", "Noto Sans", sans-serif' }}
     >
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+         {/* Go Home Button */}
+        <div className="flex justify-center md:justify-end mb-10">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 bg-white border border-slate-300 text-slate-700 hover:text-white hover:bg-blue-600 px-5 py-2 rounded-full shadow-sm transition-all duration-200"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Go to Home
+          </motion.button>
+        </div>
         {/* Header Section */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-3 mb-6"></div>
@@ -96,6 +111,7 @@ const AlumniDirectory = () => {
             remarkable achievements in biotechnology.
           </p>
         </div>
+
 
         {/* Search and Filter Section */}
         <div className="mb-8 space-y-4">
@@ -225,7 +241,6 @@ const AlumniDirectory = () => {
             </p>
           </div>
         )}
-
       </div>
     </div>
   );

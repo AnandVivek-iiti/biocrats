@@ -856,8 +856,6 @@ import blogRoutes from "./Routes/Blogs.js";
 import eventRoutes from "./Routes/Event.js";
 
 dotenv.config();
-import cloudinary from "./config/cloudinary.js";
-cloudinary
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -878,6 +876,7 @@ app.get("/api/health", (req, res) => {
 app.use("/api", userRoutes);
 app.use("/api/blogs", blogRoutes);
 app.use("/api/events", eventRoutes);
+
 
 // 404 handler
 app.use((req, res) => {
