@@ -20,6 +20,7 @@ coverage/
 # Environment variables
 .env
 **/.env
+**/.env.prod
 
 # Editor files
 .vscode/*
@@ -37,3 +38,6 @@ coverage/
 
 # Ignore specific README file
 README-ME.MD
+
+# upload folder
+Backend/uploads/

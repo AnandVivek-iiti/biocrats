@@ -12,7 +12,7 @@ import {
   Save,
 } from "lucide-react";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = "https://biocrats.onrender.com/api";
 
 function BlogPlatform() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

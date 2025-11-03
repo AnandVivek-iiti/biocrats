@@ -24,13 +24,14 @@ export default function Login() {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
   const [userEmail, setUserEmail] = useState("");
+  const Backend_Url = "https://biocrats.onrender.com";
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
+      const response = await fetch(`${Backend_Url}/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

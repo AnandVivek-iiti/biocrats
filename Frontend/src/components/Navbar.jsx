@@ -13,7 +13,7 @@ const Navbar = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const API_URL = "http://localhost:5000/api";
+  const API_URL = "Backend_Url/api";
 
   useEffect(() => {
     const handleScroll = () => {
