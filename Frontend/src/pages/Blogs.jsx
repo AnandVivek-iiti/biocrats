@@ -417,9 +417,7 @@ function BlogPlatform() {
               <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
                 <FileText className="w-6 h-6 text-white" />
               </div>
-              <h1 className="text-2xl font-bold text-gray-900">
-                Blog Platform
-              </h1>
+              <h1 className="text-2xl font-bold text-gray-900">Blogs</h1>
             </div>
           </div>
         </div>
@@ -576,13 +574,21 @@ function BlogPlatform() {
               <div className="bg-white rounded-xl shadow-md p-12 text-center">
                 <FileText className="w-20 h-20 text-gray-300 mx-auto mb-4" />
                 <h3 className="text-2xl font-bold text-gray-700 mb-2">
-                  No blogs yet
+                  Login to Read Blogs
                 </h3>
-                <p className="text-gray-500 text-lg">
-                  {view === "myBlogs"
-                    ? "You haven't created any blogs yet. Start writing!"
-                    : "No blogs have been posted yet. Be the first!"}
+                <p className="text-gray-500 text-lg mb-6">
+                  Sign in to access and create amazing content
                 </p>
+                <a
+                  href="/login"
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-lg font-bold text-lg
+             transition-all duration-300 ease-in-out shadow-md hover:shadow-xl
+             hover:-translate-y-1 hover:scale-105 relative overflow-hidden group"
+                >
+                  <span className="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
+                  <User className="w-6 h-6 z-10" />
+                  <span className="z-10">Login to Continue</span>
+                </a>
               </div>
             ) : (
               (view === "allBlogs" ? blogs : myBlogs).map(renderBlogCard)
