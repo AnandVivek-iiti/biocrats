@@ -28,7 +28,9 @@ app.use(
     credentials: true,
   })
 );
-
+app.get("/", (req, res) => {
+  res.json({ status: "OK", message: "backend is running !!" });
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
