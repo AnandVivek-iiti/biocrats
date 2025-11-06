@@ -6,7 +6,6 @@ const AlumniDirectory = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
 
-  // Real alumni data from your JSON
   const alumniData = [
     {
       id: 1,
@@ -16,7 +15,7 @@ const AlumniDirectory = () => {
       program: "BTech",
       jobRole: "Student",
       category: "academia",
-      linkedin: "https://www.linkedin.com/in/rudrajit-mandal"  
+      linkedin: "https://www.linkedin.com/in/rudrajit-mandal"
     },
     {
       id: 2,
