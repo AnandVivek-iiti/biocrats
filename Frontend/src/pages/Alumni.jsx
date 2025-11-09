@@ -6,13 +6,13 @@ const AlumniDirectory = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
 
-  const alumniData = [
+ const alumniData = [
     {
       id: 1,
       name: "Rudrajit Mandal",
       email: "email.rudrajit14@gmail.com",
-      year: "2020",
-      program: "BTech",
+      year: "2023",
+      program: "M.Sc.",
       jobRole: "Student",
       category: "academia",
       linkedin: "https://www.linkedin.com/in/rudrajit-mandal"
@@ -21,8 +21,8 @@ const AlumniDirectory = () => {
       id: 2,
       name: "Sushma",
       email: "sushmaahirwar2112@gmail.com",
-      year: "2020",
-      program: "BTech",
+      year: "2023",
+      program: "M.Sc.",
       jobRole: "Zoology teacher in senior division at Allen Career Institute, Indore",
       category: "academia",
       linkedin: "https://www.linkedin.com/in/sushma"
@@ -31,8 +31,8 @@ const AlumniDirectory = () => {
       id: 3,
       name: "Duddugunta Mohanchaitanya Reddy",
       email: "dmohanchaitanyareddy@gmail.com",
-      year: "2020",
-      program: "BTech",
+      year: "2023",
+      program: "M.Sc.",
       jobRole: "Pursuing PhD",
       category: "research",
       linkedin: "https://www.linkedin.com/in/mohanchaitanya-reddy"
@@ -41,8 +41,8 @@ const AlumniDirectory = () => {
       id: 4,
       name: "Mallar Dasgupta",
       email: "abirpathabhavan@gmail.com",
-      year: "2020",
-      program: "BTech",
+      year: "2024",
+      program: "M.Sc.",
       jobRole: "First year PhD student in NTU, Singapore - Engineering biosynthetic pathways for anti-cancerous/anti-bacterial natural products",
       category: "research",
       linkedin: "https://www.linkedin.com/in/mallar-dasgupta"
@@ -51,8 +51,8 @@ const AlumniDirectory = () => {
       id: 5,
       name: "Priyanka Patra",
       email: "009priyankapatra@gmail.com",
-      year: "2020",
-      program: "BTech",
+      year: "2023",
+      program: "M.Sc.",
       jobRole: "Zoology Faculty",
       category: "academia",
       linkedin: "https://www.linkedin.com/in/priyanka-patra"
@@ -61,8 +61,8 @@ const AlumniDirectory = () => {
       id: 6,
       name: "Sampurna Dasgupta",
       email: "sampurnadasgupta2011@gmail.com",
-      year: "2020",
-      program: "BTech",
+      year: "2023",
+      program: "M.Sc.",
       jobRole: "Clinical Research Assistant at a biotech firm",
       category: "industry",
       linkedin: "https://www.linkedin.com/in/sampurna-dasgupta"
@@ -71,8 +71,8 @@ const AlumniDirectory = () => {
       id: 7,
       name: "Akash Nigam",
       email: "akashnigam64@gmail.com",
-      year: "2020",
-      program: "BTech",
+      year: "2024",
+      program: "M.Sc.",
       jobRole: "Currently studying",
       category: "academia",
       linkedin: "https://www.linkedin.com/in/akash-nigam"
@@ -81,8 +81,8 @@ const AlumniDirectory = () => {
       id: 8,
       name: "Vibha Choudhary",
       email: "vibhachoudhary107@gmail.com",
-      year: "2020",
-      program: "BTech",
+      year: "2024",
+      program: "M.Sc.",
       jobRole: "PhD Scholar",
       category: "research",
       linkedin: "https://www.linkedin.com/in/vibha-choudhary"
@@ -91,8 +91,8 @@ const AlumniDirectory = () => {
       id: 9,
       name: "Moumita Pal",
       email: "moumitapal.cal@gmail.com",
-      year: "2020",
-      program: "BTech",
+      year: "2024",
+      program: "M.Sc.",
       jobRole: "Applying for PhD positions",
       category: "research",
       linkedin: "https://www.linkedin.com/in/moumita-pal"
@@ -101,8 +101,8 @@ const AlumniDirectory = () => {
       id: 10,
       name: "Yogesh Singh",
       email: "yashusingh711@gmail.com",
-      year: "2020",
-      program: "BTech",
+      year: "2023",
+      program: "M.Sc.",
       jobRole: "Zoology Lecturer & NEET Mentor",
       category: "academia",
       linkedin: "https://www.linkedin.com/in/yogesh-singh"
@@ -111,8 +111,8 @@ const AlumniDirectory = () => {
       id: 11,
       name: "Ritika Sharma",
       email: "ritika13509@gmail.com",
-      year: "2020",
-      program: "BTech",
+      year: "2024",
+      program: "M.Sc.",
       jobRole: "R&D Section Lead - Handling wet lab experimentation and documentation",
       category: "industry",
       linkedin: "https://www.linkedin.com/in/ritika-sharma"
@@ -121,8 +121,8 @@ const AlumniDirectory = () => {
       id: 12,
       name: "Abhijeet Singh",
       email: "abhijeetsng802@gmail.com",
-      year: "2020",
-      program: "BTech",
+      year: "2023",
+      program: "M.Sc.",
       jobRole: "Management Consultant",
       category: "industry",
       linkedin: "https://www.linkedin.com/in/abhijeet-singh"
@@ -131,11 +131,91 @@ const AlumniDirectory = () => {
       id: 13,
       name: "Nandini Singh",
       email: "ns95417.as.ns@gmail.com",
-      year: "2020",
-      program: "BTech",
+      year: "2025",
+      program: "M.Sc.",
       jobRole: "Research and Development Engineer",
       category: "industry",
       linkedin: "https://www.linkedin.com/in/nandini-singh"
+    },
+    {
+      id: 14,
+      name: "Advait Sohani",
+      email: "mt2302171010@alum.iiti.ac.in",
+      year: "2025",
+      program: "MTech",
+      jobRole: "Graduate Student",
+      category: "academia",
+      linkedin: "http://linkedin.com/in/advait-sohani-2b4729171"
+    },
+    {
+      id: 15,
+      name: "Surjyapratap Sarangi",
+      email: "mt2302171009@alum.iiti.ac.in",
+      year: "2025",
+      program: "MTech",
+      jobRole: "Graduate Student",
+      category: "academia",
+      linkedin: "http://www.linkedin.com/in/surjya-pratap"
+    },
+    {
+      id: 16,
+      name: "Tuhin Sarkar",
+      email: "tstuhin777@gmail.com",
+      year: "2020",
+      program: "M.Sc.",
+      jobRole: "Graduate",
+      category: "academia",
+      linkedin: "https://www.linkedin.com/in/tuhin-sarkar"
+    },
+    {
+      id: 17,
+      name: "Rahul Sharma",
+      email: "rahulhry011@gmail.com",
+      year: "2023",
+      program: "M.Sc.",
+      jobRole: "Graduate",
+      category: "academia",
+      linkedin: "https://www.linkedin.com/in/rahul-sharma"
+    },
+    {
+      id: 18,
+      name: "Milan Khanda",
+      email: "milankhanda23@gmail.com",
+      year: "2025",
+      program: "M.Sc.",
+      jobRole: "Graduate Student",
+      category: "academia",
+      linkedin: "https://www.linkedin.com/in/milan-khanda"
+    },
+    {
+      id: 19,
+      name: "Kanav Gupta",
+      email: "kanavhimank@gmail.com",
+      year: "2024",
+      program: "M.Sc.",
+      jobRole: "Graduate",
+      category: "academia",
+      linkedin: "https://www.linkedin.com/in/kanav-gupta"
+    },
+    {
+      id: 20,
+      name: "Piyush Goel",
+      email: "piyushgoel40@gmail.com",
+      year: "2022",
+      program: "M.Sc.",
+      jobRole: "Graduate",
+      category: "academia",
+      linkedin: "https://www.linkedin.com/in/piyushgoel40"
+    },
+    {
+      id: 21,
+      name: "MAHESH SAHU",
+      email: "maheshsahu93055@gmail.com",
+      year: "2025",
+      program: "M.Sc.",
+      jobRole: "Graduate Student",
+      category: "academia",
+      linkedin: "https://www.linkedin.com/in/mahesh-sahu-92b08826b/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BY58zB%2BLUTwidTpsR435%2BAg%3D%3D"
     }
   ];
 
