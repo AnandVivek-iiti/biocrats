@@ -1,171 +1,401 @@
-[
+ [
   {
     "name": "Rudrajit Mandal",
-    "email": "rudrajit14@gmail.com",
-    "password": "Alumni@123",
-    "year": 20,
-    "program": "BTech",
-    "jobRole": "NIL",
+    "email": "email.rudrajit14@gmail.com",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2023,
+    "program": "M.Sc.",
+    "jobRole": "Student",
+    "category": "academia",
+    "linkedin": "https://www.linkedin.com/in/rudrajit-mandal",
     "isActive": true,
     "isEmailVerified": false,
-    "lastLogin": null,
-    "createdAt": "2025-10-30T11:04:22.418812",
-    "updatedAt": "2025-10-30T11:04:22.418829"
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
   },
   {
     "name": "Sushma",
     "email": "sushmaahirwar2112@gmail.com",
-    "password": "Alumni@123",
-    "year": 20,
-    "program": "BTech",
-    "jobRole": "I am zoology teacher in senior devision at Allen career institute, indore",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2023,
+    "program": "M.Sc.",
+    "jobRole": "Zoology teacher in senior division at Allen Career Institute, Indore",
+    "category": "academia",
+    "linkedin": "https://www.linkedin.com/in/sushma",
     "isActive": true,
     "isEmailVerified": false,
-    "lastLogin": null,
-    "createdAt": "2025-10-30T11:04:22.419037",
-    "updatedAt": "2025-10-30T11:04:22.419045"
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
   },
   {
     "name": "Duddugunta Mohanchaitanya Reddy",
     "email": "dmohanchaitanyareddy@gmail.com",
-    "password": "Alumni@123",
-    "year": 20,
-    "program": "BTech",
-    "jobRole": "I am persuing my PhD",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2023,
+    "program": "M.Sc.",
+    "jobRole": "Pursuing PhD",
+    "category": "research",
+    "linkedin": "https://www.linkedin.com/in/mohanchaitanya-reddy",
     "isActive": true,
     "isEmailVerified": false,
-    "lastLogin": null,
-    "createdAt": "2025-10-30T11:04:22.419241",
-    "updatedAt": "2025-10-30T11:04:22.419248"
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
   },
   {
     "name": "Mallar Dasgupta",
     "email": "abirpathabhavan@gmail.com",
-    "password": "Alumni@123",
-    "year": 20,
-    "program": "BTech",
-    "jobRole": "As of now , I am a first year PhD student in NTU, Singapore. My field of work is related to engineering key biosynthetic pathways for production of diverse anti-cancerous/anti-bacterial natural products.",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2024,
+    "program": "M.Sc.",
+    "jobRole": "First year PhD student in NTU, Singapore - Engineering biosynthetic pathways for anti-cancerous/anti-bacterial natural products",
+    "category": "research",
+    "linkedin": "https://www.linkedin.com/in/mallar-dasgupta",
     "isActive": true,
     "isEmailVerified": false,
-    "lastLogin": null,
-    "createdAt": "2025-10-30T11:04:22.419472",
-    "updatedAt": "2025-10-30T11:04:22.419482"
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
   },
   {
     "name": "Priyanka Patra",
     "email": "009priyankapatra@gmail.com",
-    "password": "Alumni@123",
-    "year": 20,
-    "program": "BTech",
-    "jobRole": "Zoology faculty",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2023,
+    "program": "M.Sc.",
+    "jobRole": "Zoology Faculty",
+    "category": "academia",
+    "linkedin": "https://www.linkedin.com/in/priyanka-patra",
     "isActive": true,
     "isEmailVerified": false,
-    "lastLogin": null,
-    "createdAt": "2025-10-30T11:04:22.419713",
-    "updatedAt": "2025-10-30T11:04:22.419720"
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
   },
   {
     "name": "Sampurna Dasgupta",
     "email": "sampurnadasgupta2011@gmail.com",
-    "password": "Alumni@123",
-    "year": 20,
-    "program": "BTech",
-    "jobRole": "I work as a Clinical Research Assistant at a biotech firm.",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2023,
+    "program": "M.Sc.",
+    "jobRole": "Clinical Research Assistant at a biotech firm",
+    "category": "industry",
+    "linkedin": "https://www.linkedin.com/in/sampurna-dasgupta",
     "isActive": true,
     "isEmailVerified": false,
-    "lastLogin": null,
-    "createdAt": "2025-10-30T11:04:22.419857",
-    "updatedAt": "2025-10-30T11:04:22.419866"
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
   },
   {
     "name": "Akash Nigam",
     "email": "akashnigam64@gmail.com",
-    "password": "Alumni@123",
-    "year": 20,
-    "program": "BTech",
-    "jobRole": "Currently i am studying",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2024,
+    "program": "M.Sc.",
+    "jobRole": "Currently studying",
+    "category": "academia",
+    "linkedin": "https://www.linkedin.com/in/akash-nigam",
     "isActive": true,
     "isEmailVerified": false,
-    "lastLogin": null,
-    "createdAt": "2025-10-30T11:04:22.420010",
-    "updatedAt": "2025-10-30T11:04:22.420016"
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
   },
   {
     "name": "Vibha Choudhary",
     "email": "vibhachoudhary107@gmail.com",
-    "password": "Alumni@123",
-    "year": 20,
-    "program": "BTech",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2024,
+    "program": "M.Sc.",
     "jobRole": "PhD Scholar",
+    "category": "research",
+    "linkedin": "https://www.linkedin.com/in/vibha-choudhary",
     "isActive": true,
     "isEmailVerified": false,
-    "lastLogin": null,
-    "createdAt": "2025-10-30T11:04:22.420118",
-    "updatedAt": "2025-10-30T11:04:22.420123"
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
   },
   {
     "name": "Moumita Pal",
     "email": "moumitapal.cal@gmail.com",
-    "password": "Alumni@123",
-    "year": 20,
-    "program": "BTech",
-    "jobRole": "I am applying for PhD positions.",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2024,
+    "program": "M.Sc.",
+    "jobRole": "Applying for PhD positions",
+    "category": "research",
+    "linkedin": "https://www.linkedin.com/in/moumita-pal",
     "isActive": true,
     "isEmailVerified": false,
-    "lastLogin": null,
-    "createdAt": "2025-10-30T11:04:22.420237",
-    "updatedAt": "2025-10-30T11:04:22.420243"
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
   },
   {
     "name": "Yogesh Singh",
     "email": "yashusingh711@gmail.com",
-    "password": "Alumni@123",
-    "year": 20,
-    "program": "BTech",
-    "jobRole": "I'm designated as Zoology lecturer & NEET mentor",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2023,
+    "program": "M.Sc.",
+    "jobRole": "Zoology Lecturer & NEET Mentor",
+    "category": "academia",
+    "linkedin": "https://www.linkedin.com/in/yogesh-singh",
     "isActive": true,
     "isEmailVerified": false,
-    "lastLogin": null,
-    "createdAt": "2025-10-30T11:04:22.420330",
-    "updatedAt": "2025-10-30T11:04:22.420334"
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
   },
   {
     "name": "Ritika Sharma",
     "email": "ritika13509@gmail.com",
-    "password": "Alumni@123",
-    "year": 20,
-    "program": "BTech",
-    "jobRole": "I handle the R&D section of the startup, which includes all the wet lab experimentation and documentation.",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2024,
+    "program": "M.Sc.",
+    "jobRole": "R&D Section Lead - Handling wet lab experimentation and documentation",
+    "category": "industry",
+    "linkedin": "https://www.linkedin.com/in/ritika-sharma",
     "isActive": true,
     "isEmailVerified": false,
-    "lastLogin": null,
-    "createdAt": "2025-10-30T11:04:22.420418",
-    "updatedAt": "2025-10-30T11:04:22.420422"
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
   },
   {
     "name": "Abhijeet Singh",
     "email": "abhijeetsng802@gmail.com",
-    "password": "Alumni@123",
-    "year": 20,
-    "program": "BTech",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2023,
+    "program": "M.Sc.",
     "jobRole": "Management Consultant",
+    "category": "industry",
+    "linkedin": "https://www.linkedin.com/in/abhijeet-singh",
     "isActive": true,
     "isEmailVerified": false,
-    "lastLogin": null,
-    "createdAt": "2025-10-30T11:04:22.420506",
-    "updatedAt": "2025-10-30T11:04:22.420510"
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
   },
   {
     "name": "Nandini Singh",
     "email": "ns95417.as.ns@gmail.com",
-    "password": "Alumni@123",
-    "year": 20,
-    "program": "BTech",
-    "jobRole": "Research and development engineer",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2025,
+    "program": "M.Sc.",
+    "jobRole": "Research and Development Engineer",
+    "category": "industry",
+    "linkedin": "https://www.linkedin.com/in/nandini-singh",
     "isActive": true,
     "isEmailVerified": false,
-    "lastLogin": null,
-    "createdAt": "2025-10-30T11:04:22.420594",
-    "updatedAt": "2025-10-30T11:04:22.420599"
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "name": "Advait Sohani",
+    "email": "mt2302171010@alum.iiti.ac.in",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2025,
+    "program": "MTech",
+    "jobRole": "Graduate Student",
+    "category": "academia",
+    "linkedin": "http://linkedin.com/in/advait-sohani-2b4729171",
+    "isActive": true,
+    "isEmailVerified": false,
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "name": "Surjyapratap Sarangi",
+    "email": "mt2302171009@alum.iiti.ac.in",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2025,
+    "program": "MTech",
+    "jobRole": "Graduate Student",
+    "category": "academia",
+    "linkedin": "http://www.linkedin.com/in/surjya-pratap",
+    "isActive": true,
+    "isEmailVerified": false,
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "name": "Tuhin Sarkar",
+    "email": "tstuhin777@gmail.com",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2020,
+    "program": "M.Sc.",
+    "jobRole": "Graduate",
+    "category": "academia",
+    "linkedin": "https://www.linkedin.com/in/tuhin-sarkar",
+    "isActive": true,
+    "isEmailVerified": false,
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "name": "Rahul Sharma",
+    "email": "rahulhry011@gmail.com",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2023,
+    "program": "M.Sc.",
+    "jobRole": "Graduate",
+    "category": "academia",
+    "linkedin": "https://www.linkedin.com/in/rahul-sharma",
+    "isActive": true,
+    "isEmailVerified": false,
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "name": "Milan Khanda",
+    "email": "milankhanda23@gmail.com",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2025,
+    "program": "M.Sc.",
+    "jobRole": "Graduate Student",
+    "category": "academia",
+    "linkedin": "https://www.linkedin.com/in/milan-khanda",
+    "isActive": true,
+    "isEmailVerified": false,
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "name": "Kanav Gupta",
+    "email": "kanavhimank@gmail.com",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2024,
+    "program": "M.Sc.",
+    "jobRole": "Graduate",
+    "category": "academia",
+    "linkedin": "https://www.linkedin.com/in/kanav-gupta",
+    "isActive": true,
+    "isEmailVerified": false,
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "name": "Piyush Goel",
+    "email": "piyushgoel40@gmail.com",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2022,
+    "program": "M.Sc.",
+    "jobRole": "Graduate",
+    "category": "academia",
+    "linkedin": "https://www.linkedin.com/in/piyushgoel40",
+    "isActive": true,
+    "isEmailVerified": false,
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "name": "MAHESH SAHU",
+    "email": "maheshsahu93055@gmail.com",
+    "password": "$2b$10$o3x.ktXP5VPItaksPnHTy.RwX7JURCQuCnKJR/9JyN7M.ic1RZTC.",
+    "year": 2025,
+    "program": "M.Sc.",
+    "jobRole": "Graduate Student",
+    "category": "academia",
+    "linkedin": "https://www.linkedin.com/in/mahesh-sahu-92b08826b/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BY58zB%2BLUTwidTpsR435%2BAg%3D%3D",
+    "isActive": true,
+    "isEmailVerified": false,
+    "createdAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-11-09T10:00:00.000Z"
+    },
+    "__v": 0
   }
 ]

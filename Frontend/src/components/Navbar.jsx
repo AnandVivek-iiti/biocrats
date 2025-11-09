@@ -13,7 +13,9 @@ const Navbar = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const API_URL = "Backend_Url/api";
+  const Backend_Url = "https://biocrats.onrender.com";
+  const API_URL = `${Backend_Url}/api`;
+
 
   useEffect(() => {
     const handleScroll = () => {
