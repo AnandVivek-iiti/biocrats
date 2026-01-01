@@ -91,7 +91,7 @@ export default function SignupPage() {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
-
+const Backend_Url = "https://biocrats.onrender.com";
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -102,7 +102,7 @@ export default function SignupPage() {
     setIsLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/signup", {
+      const res = await fetch(`${Backend_Url}/api/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

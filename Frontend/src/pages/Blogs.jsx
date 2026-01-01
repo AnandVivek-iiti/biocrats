@@ -641,6 +641,7 @@ export default function BlogPlatform() {
     authorEmail: "",
   });
 
+  // ✅ Fetch current user from token
   useEffect(() => {
     fetchBlogs();
   }, []);
@@ -812,6 +813,7 @@ export default function BlogPlatform() {
                 <p className="text-slate-500">
                   Discover insights from our community of bio-enthusiasts.
                 </p>
+               
               </div>
 
               {fetching ? (

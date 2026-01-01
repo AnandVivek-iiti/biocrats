@@ -197,12 +197,12 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
                  <p className="text-slate-400 text-sm text-center sm:text-left">
-           Developed by Anand Vivek
+          Developed by Anand Vivek
           </p>
           <p className="text-slate-400 text-sm text-center sm:text-left">
             © {new Date().getFullYear()} Biocrats Club IIT Indore. All rights reserved.
           </p>
-          
+
         </div>
 
 

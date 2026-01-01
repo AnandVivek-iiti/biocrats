@@ -55,7 +55,7 @@ npm run dev
 npm start
 ```
 
-Server will start at `http://localhost:5000`
+Server will start at `Backend_Url`
 
 ## API Endpoints
 
@@ -151,7 +151,7 @@ backend/
 
 ```bash
 # Test signup
-curl -X POST http://localhost:5000/api/signup \
+curl -X POST Backend_Url/api/signup \
   -H "Content-Type: application/json" \
   -d '{
     "name": "John Doe",
@@ -166,7 +166,7 @@ curl -X POST http://localhost:5000/api/signup \
 ### Using Postman:
 1. Import the endpoints
 2. Set method to POST
-3. Set URL to `http://localhost:5000/api/signup`
+3. Set URL to `Backend_Url/api/signup`
 4. Set body to JSON and add the required fields
 5. Send request
 

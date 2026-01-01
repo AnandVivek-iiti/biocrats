@@ -229,17 +229,33 @@ const Navbar = () => {
             ))}
           </nav>
 
-          {/* Right Section (Auth & Mobile Toggle) */}
-          <div className="flex items-center gap-4">
-            {/* IIT Logo */}
+          {/* Right side - IITI Logo and Auth */}
+          <div className="flex items-center gap-3 sm:gap-4">
+            {/* IITI Logo */}
             <a
               href="https://iiti.ac.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:block opacity-80 hover:opacity-100 transition-opacity"
+              className="group cursor-pointer"
             >
-              <img src={iiti} alt="IIT Indore" className="h-16 w-16" />
+              <div className="relative">
+                <div className="absolute inset-0 bg-[#1173d4]/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <img
+                  className="h-8 w-8 sm:h-12 sm:w-12 relative z-10 transition-transform duration-300 group-hover:scale-110 "
+                  src={iiti}
+                  alt="IIT Indore Logo"
+                />
+              </div>
             </a>
+
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="lg:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-all duration-300 hover:scale-110 active:scale-95"
+              aria-label="Toggle menu"
+            >
+            </button>
 
           </div>
         </div>
@@ -272,47 +288,6 @@ const Navbar = () => {
                 </motion.a>
               ))}
 
-              <motion.div
-                variants={mobileItemVariants}
-                className="pt-4 mt-4 border-t border-slate-100"
-              >
-                {!isAuthenticated ? (
-                  <div className="grid grid-cols-2 gap-4">
-                    <button
-                      onClick={() => handleAuthClick("/login")}
-                      className="w-full py-2.5 text-center text-sm font-semibold text-slate-700 border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors"
-                    >
-                      Login
-                    </button>
-                    <button
-                      onClick={() => handleAuthClick("/signup")}
-                      className="w-full py-2.5 text-center text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
-                    >
-                      Sign Up
-                    </button>
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3 px-2">
-                      <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
-                        {currentUser?.name?.charAt(0).toUpperCase()}
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-slate-900">
-                          {currentUser?.name}
-                        </p>
-                        <p className="text-xs text-slate-500">Member</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={handleLogout}
-                      className="w-full flex items-center justify-center gap-2 py-2.5 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
-                    >
-                      <LogOut size={16} /> Logout
-                    </button>
-                  </div>
-                )}
-              </motion.div>
             </div>
           </motion.div>
         )}

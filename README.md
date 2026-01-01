@@ -14,21 +14,21 @@ It serves as a one-stop platform for students, faculty, and enthusiasts connecte
 
 ##  Features
 
-- Landing page with club overview  
-- Events page (dynamic from backend)  
-- Team/Faculty details  
-- Gallery for images  
--  Responsive design  
--  Full-stack project (Backend + Frontend)  
+- Landing page with club overview
+- Events page (dynamic from backend)
+- Team/Faculty details
+- Gallery for images
+-  Responsive design
+-  Full-stack project (Backend + Frontend)
 
 ---
 
 ## 🛠 Tech Stack
 
-- **Frontend**: React (with Vite) + Tailwind CSS  
-- **Backend**: Node.js + Express  
-- **Styling**: Tailwind CSS  
-- **Hosting**: Vercel (frontend), Node server deployable anywhere (backend)  
+- **Frontend**: React (with Vite) + Tailwind CSS
+- **Backend**: Node.js + Express
+- **Styling**: Tailwind CSS
+- **Hosting**: Vercel (frontend), Node server deployable anywhere (backend)
 
 ---
 
@@ -54,7 +54,7 @@ Bio-Crats/
 │ │ ├── App.jsx
 │ │ ├── App.css
 │ │ ├── index.css
-│ │ └── main.jsx 
+│ │ └── main.jsx
 │ ├── index.html
 │ ├── eslint.config.js
 │ ├── package.json
@@ -66,7 +66,7 @@ Bio-Crats/
 ## ⚙️ Local Setup
 
 Clone the repository
-   
+
     git clone https://github.com/BioCrats-Club-IIT-Indore/Bio-Crats.git
     cd Bio-Crats
 
@@ -87,10 +87,10 @@ Run backend:
     npm run dev
 
 
-Server will start at  http://localhost:5000/
+Server will start at  Backend_Url/
 
 3. Frontend Setup
-   
+
         cd ../Frontend
         npm install
 
