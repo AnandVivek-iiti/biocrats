@@ -14,8 +14,9 @@ import NotFound from "./components/Notfound";
 import Footer from "./components/Footer";
 import LoginPage from "./pages/Login";
 import Signup from "./pages/Signup";
-import photo from "./assets/biobg.jpg"
+
 import Blogs from "./pages/Blogs";
+import AdminPanel from "./pages/Adminpannel";
 function MainPage() {
   useEffect(() => {
     const handleSmoothScroll = (e) => {
@@ -70,7 +71,6 @@ function MainPage() {
         </section>
       </main>
       <Footer />
-
     </>
   );
 }
@@ -82,8 +82,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/alumni" element={<AlumniDirectory />} />
-
+        <Route path="/admin" element={<AdminPanel />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

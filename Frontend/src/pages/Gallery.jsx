@@ -48,18 +48,18 @@ const BiocratGalleryPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
-        <div className="absolute inset-0 bg-black opacity-10"></div>
+      <div className="relative overflow-hidden text-black">
+
         <div className="relative px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
           <div className="max-w-7xl mx-auto text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6 animate-fade-in">
               Gallery
             </h1>
-            <div className="w-24 h-1 bg-white mx-auto mb-6"></div>
-            <p className="text-lg sm:text-xl lg:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+            <div className="w-24 h-1 bg-black mx-auto mb-6"></div>
+            <p className="text-lg sm:text-xl lg:text-2xl text-gray-800 max-w-3xl mx-auto leading-relaxed">
               Explore the vibrant moments captured at Biocrats Club IIT Indore
             </p>
-            <p className="mt-4 text-base sm:text-lg text-blue-200 max-w-2xl mx-auto">
+            <p className="mt-4 text-base sm:text-lg text-blue-800 max-w-2xl mx-auto">
               From workshops to competitions, our gallery showcases the essence of our activities and the spirit of our community
             </p>
           </div>

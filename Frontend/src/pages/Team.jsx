@@ -1,156 +1,16 @@
 import React, { useState } from "react";
 import {X, Search, Mail, Linkedin} from "lucide-react";
 import { TbWorld } from "react-icons/tb";
-import faculty1 from "../assets/faculty/faculty1.jpg";
-import faculty2 from "../assets/faculty/faculty2.jpg";
-import Anand from "../assets/core/Anand.jpg";
-import Anjali from "../assets/core/Anjali.jpeg";
-import Raza from "../assets/core/Raza.jpg";
-import Pooja from "../assets/core/Pooja.jpg";
-import Ayushi from "../assets/core/Ayushi.jpg";
-import Shudh from "../assets/core/Shudh.jpg";
-import Viraj from "../assets/core/Viraj.jpg";
-import Smita from "../assets/core/Smita.jpg";
 import logo from "../assets/logo.png";
+import { coreMembers } from "../data/Team/coremembers";
+import { members } from "../data/Team/members";
+import { professors } from "../data/Team/professors";
 
 const BiocratTeamPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
   const [zoomedImage, setZoomedImage] = useState(null);
 
-
-  const coreTeam = [
-    {
-      name: "Dr. Hitendra Kumar",
-      role: "Assistant Professor",
-      bio :"Biofabrication Laboratory",
-      department: "Biotechnology",
-      image: faculty1,
-      linkedin: "https://www.linkedin.com/in/hitendra-iitk/",
-      website :"https://sites.google.com/iiti.ac.in/hk-lab/",
-      mail: "mailto:sivarajms@iiti.ac.in"
-    },
-    {
-      name: "Dr. Sivaraj Mohana Sundaram",
-      role: "Assistant Professor",
-      bio :"Neurobiology lab",
-      department: "Biotechnology",
-      image: faculty2,
-      linkedin: "https://www.linkedin.com/in/sivaraj-mohana-sundaram-462b62160/",
-      website :"https://sites.google.com/view/smslabpageiiti/home",
-      mail: "mailto:hitendra@iiti.ac.in"
-    },
-  ];
-
-  const coordinators = [
-    {
-      name: "Anjali Singh",
-      role: "Club Head",
-      category: "leadership",
-      linkedin: "https://www.linkedin.com/in/anjalisin0807/",
-      mail: "mailto:mt2402171003@iiti.ac.in",
-      image: Anjali,
-    },
-    {
-      name: "Smita Karati",
-      role: "Co-Head",
-      category: "leadership",
-      linkedin: "https://www.linkedin.com/in/smita-karati0714/",
-      mail: "mailto:msc2403171020@iiti.ac.in",
-      image: Smita,
-    },
-    {
-      name: "Asjad Raza",
-      role: "MTech Convenor",
-      category: "leadership",
-      linkedin: "https://www.linkedin.com/in/asjadraza54/",
-      mail: "mailto:mt2402171009@iiti.ac.in",
-      image: Raza,
-    },
-    {
-      name: "Ayushi Rawat",
-      role: "MTech Convenor",
-      category: "leadership",
-      linkedin: "https://www.linkedin.com/in/ayushi-rawat-aa8002263/",
-      mail: "mailto:mt2502171032@iiti.ac.in",
-      image: Ayushi,
-    },
-    {
-      name: "Shudhanshu Ranjan Singh",
-      role: "MSc Convenor",
-      category: "leadership",
-      linkedin: "https://www.linkedin.com/in/shudhanshu-ranjan-singh-b6784a322/",
-      mail: "mailto:msc2403171021@iiti.ac.in",
-      image: Shudh,
-    },
-    {
-      name: "Pooja Pahel",
-      role: "MSc Convenor",
-      category: "leadership",
-      linkedin: "https://www.linkedin.com/in/pooja-p-900450260/",
-      mail: "mailto:msc2503171009@iiti.ac.in",
-      image: Pooja,
-    },
-    {
-      name: "Anand Vivek",
-      role: "Cross Department Convenor",
-      category: "leadership",
-      linkedin: "https://www.linkedin.com/in/anandvivek1223/",
-      mail: "mailto:me240003006@iiti.ac.in",
-      image: Anand,
-    },
-    {
-      name: "Viraj Tekale",
-      role: "Treasurer",
-      category: "leadership",
-      linkedin: "https://www.linkedin.com/in/viraj-tekale-a77a49285/",
-      mail: "mailto:mt2502171038@iiti.ac.in",
-      image: Viraj,
-    },
-  ];
-
-  const executiveMembers = [
-    {
-      name: "Anand  Vivek",
-      role: "Event Manager",
-      year: "Second Year",
-      category: "events",
-      image: Anand
-        },
-    {
-      name: " Ayushi",
-      role: "Adviser Team",
-      category: "Adviser",
-      image: Ayushi
-    },
-    {
-      name: "Raza",
-      role: "Outreach Coordinator",
-      year: "Second Year",
-      category: "outreach",
-      image: Raza
-     },
-    {
-      name: "S R S",
-      role: "Design Head",
-      year: "Second Year",
-      category: "creative",
-      image: Shudh
-      },
-    {
-      name: "Pooja ",
-      role: "Content Writer",
-      year: "Second Year",
-      category: "creative",
-      image:Pooja
-      },
-    {
-      name: "Viraj",
-      role: "Social Media Manager",
-      year: "Second Year",
-      category: "creative",
-      image: Viraj    },
-  ];
 
   const filters = [
     { id: "all", label: "All Members" },
@@ -161,11 +21,11 @@ const BiocratTeamPage = () => {
     { id: "outreach", label: "Outreach" },
   ];
 
-  const filteredExecutive = executiveMembers.filter(
+  const filteredExecutive = members.filter(
     (member) => activeFilter === "all" || member.category === activeFilter
   );
 
-  const allMembers = [...coreTeam, ...coordinators, ...executiveMembers];
+  const allMembers = [...professors, ...coreMembers, ...members];
   const searchResults = searchQuery
     ? allMembers.filter(
         (member) =>
@@ -332,7 +192,7 @@ const BiocratTeamPage = () => {
                   </h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                  {coreTeam.map((member, index) => (
+                  {professors.map((member, index) => (
                     <TeamCard key={index} member={member} isPrimary={true} />
                   ))}
                 </div>
@@ -346,7 +206,7 @@ const BiocratTeamPage = () => {
                   </h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                  {coordinators.map((member, index) => (
+                  {coreMembers.map((member, index) => (
                     <TeamCard key={index} member={member} />
                   ))}
                 </div>

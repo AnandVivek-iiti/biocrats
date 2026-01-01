@@ -777,6 +777,7 @@ const BiocatsEventsPage = () => {
 
       if (response.ok) {
         const data = await response.json();
+        console.log(data);
         setIsAdmin(data.user?.isAdmin || false);
       } else {
         setIsAdmin(false);

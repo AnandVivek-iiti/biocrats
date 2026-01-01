@@ -196,29 +196,13 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="mt-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
+                 <p className="text-slate-400 text-sm text-center sm:text-left">
+           Developed by Anand Vivek
+          </p>
           <p className="text-slate-400 text-sm text-center sm:text-left">
             © {new Date().getFullYear()} Biocrats Club IIT Indore. All rights reserved.
           </p>
-          <div className="flex flex-wrap justify-center gap-6">
-            <a
-              href="#privacy"
-              className="text-slate-400 hover:text-blue-400 text-sm font-medium transition-colors"
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="#terms"
-              className="text-slate-400 hover:text-blue-400 text-sm font-medium transition-colors"
-            >
-              Terms of Service
-            </a>
-            <a
-              href="#cookies"
-              className="text-slate-400 hover:text-blue-400 text-sm font-medium transition-colors"
-            >
-              Cookie Policy
-            </a>
-          </div>
+          
         </div>
 
 

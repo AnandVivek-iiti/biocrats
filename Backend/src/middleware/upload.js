@@ -1,5 +1,18 @@
 import multer from "multer";
-import { blogStorage, eventStorage } from "../config/cloudinary.js";
+import cloudinary from "../config/cloudinary.js";
+
+const blogStorage = multer.diskStorage({
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+const eventStorage = multer.diskStorage({
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+
 
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png|gif|pdf|doc|docx|txt/;
