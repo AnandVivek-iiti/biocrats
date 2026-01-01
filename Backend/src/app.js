@@ -21,10 +21,7 @@ connectDB();
 /* ======================
    CORS (CORRECT)
    ====================== */
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://biocrats.vercel.app",
-];
+const allowedOrigins = ["http://localhost:5173", "https://biocrats.vercel.app"];
 
 app.use(
   cors({
