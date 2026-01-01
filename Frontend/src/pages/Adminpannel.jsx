@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Check,
   X,
@@ -6,50 +6,92 @@ import {
   Edit2,
   Save,
   FileText,
-  Image,
+  Image as ImageIcon,
 } from "lucide-react";
+import AdminEventForm from "./createEvent";
 
-const API_URL = "http://localhost:5000/api";
+/* -----------------------
+   API CONFIG
+----------------------- */
+const API_URL =
+  import.meta.env.MODE === "production"
+    ? "https://biocrats.vercel.app/api"
+    : "http://localhost:5000/api";
 
 export default function AdminPanel() {
   const [secret, setSecret] = useState("");
   const [authorized, setAuthorized] = useState(false);
+  const [activeTab, setActiveTab] = useState("events");
+
   const [blogs, setBlogs] = useState([]);
+  const [events, setEvents] = useState([]);
+
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({ title: "", content: "" });
 
-  /* =====================
-     FETCH ALL BLOGS
-     ===================== */
+  const [showEventForm, setShowEventForm] = useState(false);
+  const [editingEvent, setEditingEvent] = useState(null);
+
+  /* -----------------------
+     LOGIN + BLOG FETCH
+  ----------------------- */
   const fetchBlogs = async () => {
+    if (!secret) return setError("Admin secret required");
+
     try {
+      setLoading(true);
       const res = await fetch(`${API_URL}/admin/blogs`, {
         headers: { "x-admin-secret": secret },
       });
 
-      if (!res.ok) throw new Error("Unauthorized");
-
+      if (!res.ok) throw new Error();
       const data = await res.json();
+
       setBlogs(data.blogs || []);
       setAuthorized(true);
       setError("");
     } catch {
-      setError("Invalid admin secret");
       setAuthorized(false);
+      setError("Invalid admin secret");
+    } finally {
+      setLoading(false);
     }
   };
 
-  /* =====================
-     STATUS UPDATE
-     ===================== */
+  /* -----------------------
+     FETCH EVENTS
+  ----------------------- */
+  const fetchEvents = async () => {
+    try {
+      const res = await fetch(`${API_URL}/admin/events`, {
+        headers: { "x-admin-secret": secret },
+      });
+
+      const data = await res.json();
+      setEvents(data.events || []);
+    } catch {
+      console.error("Failed to fetch events");
+    }
+  };
+
+  useEffect(() => {
+    if (authorized) {
+      fetchBlogs();
+      fetchEvents();
+    }
+  }, [authorized]);
+
+  /* -----------------------
+     BLOG ACTIONS
+  ----------------------- */
   const updateStatus = async (id, action) => {
-    const res = await fetch(`${API_URL}/admin/blogs/${id}/${action}`, {
+    await fetch(`${API_URL}/admin/blogs/${id}/${action}`, {
       method: "PUT",
       headers: { "x-admin-secret": secret },
     });
-
-    if (!res.ok) return alert("Action failed");
 
     setBlogs((prev) =>
       prev.map((b) =>
@@ -60,25 +102,17 @@ export default function AdminPanel() {
     );
   };
 
-  /* =====================
-     DELETE BLOG
-     ===================== */
   const deleteBlog = async (id) => {
     if (!confirm("Delete this blog permanently?")) return;
 
-    const res = await fetch(`${API_URL}/admin/blogs/${id}`, {
+    await fetch(`${API_URL}/admin/blogs/${id}`, {
       method: "DELETE",
       headers: { "x-admin-secret": secret },
     });
 
-    if (!res.ok) return alert("Delete failed");
-
     setBlogs((prev) => prev.filter((b) => b._id !== id));
   };
 
-  /* =====================
-     EDIT BLOG
-     ===================== */
   const startEdit = (blog) => {
     setEditingId(blog._id);
     setEditForm({ title: blog.title, content: blog.content });
@@ -94,199 +128,203 @@ export default function AdminPanel() {
       body: JSON.stringify(editForm),
     });
 
-    if (!res.ok) return alert("Update failed");
-
     const data = await res.json();
-
-    setBlogs((prev) =>
-      prev.map((b) => (b._id === id ? data.blog : b))
-    );
+    setBlogs((prev) => prev.map((b) => (b._id === id ? data.blog : b)));
     setEditingId(null);
   };
 
-  /* =====================
-     HELPERS
-     ===================== */
-  const getIcon = (type) =>
-    type?.startsWith("image/") ? (
-      <Image className="w-4 h-4" />
-    ) : (
-      <FileText className="w-4 h-4" />
-    );
-
-  const statusStyle = {
-    pending: "bg-yellow-100 text-yellow-800",
-    approved: "bg-green-100 text-green-800",
-    rejected: "bg-red-100 text-red-800",
+  /* -----------------------
+     EVENT ACTIONS
+  ----------------------- */
+  const handleCreateEvent = () => {
+    setEditingEvent(null);
+    setShowEventForm(true);
   };
 
-  /* =====================
-     LOGIN VIEW
-     ===================== */
+  const handleEditEvent = (event) => {
+    setEditingEvent(event);
+    setShowEventForm(true);
+  };
+
+  const handleDeleteEvent = async (id) => {
+    if (!confirm("Delete this event permanently?")) return;
+
+    await fetch(`${API_URL}/admin/events/${id}`, {
+      method: "DELETE",
+      headers: { "x-admin-secret": secret },
+    });
+
+    setEvents((prev) => prev.filter((e) => e._id !== id));
+  };
+
+  const handleSaveEvent = async (formData) => {
+    const url = editingEvent
+      ? `${API_URL}/admin/events/${editingEvent._id}`
+      : `${API_URL}/admin/events`;
+
+    const method = editingEvent ? "PUT" : "POST";
+
+    await fetch(url, {
+      method,
+      headers: { "x-admin-secret": secret },
+      body: formData,
+    });
+
+    await fetchEvents();
+    setShowEventForm(false);
+    setEditingEvent(null);
+  };
+
+  /* -----------------------
+     LOGIN SCREEN
+  ----------------------- */
   if (!authorized) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-sm">
-          <h2 className="text-2xl font-bold mb-4 text-center">
-            Admin Access
-          </h2>
+          <h2 className="text-2xl font-bold mb-6 text-center">Admin Access</h2>
 
           <input
             type="password"
-            placeholder="Admin Secret"
             value={secret}
             onChange={(e) => setSecret(e.target.value)}
             className="w-full border px-4 py-3 rounded-lg mb-4"
+            placeholder="Admin Secret"
           />
 
           <button
             onClick={fetchBlogs}
             className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold"
           >
-            Enter
+            Enter Dashboard
           </button>
 
           {error && (
-            <p className="text-red-500 text-sm mt-3 text-center">
-              {error}
-            </p>
+            <p className="text-red-500 text-sm mt-4 text-center">{error}</p>
           )}
         </div>
       </div>
     );
   }
 
-  /* =====================
+  /* -----------------------
      DASHBOARD
-     ===================== */
+  ----------------------- */
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold mb-6">Admin Blog Dashboard</h1>
+      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
 
-      {blogs.length === 0 ? (
-        <p className="text-gray-600">No blogs found.</p>
-      ) : (
-        <div className="space-y-6">
-          {blogs.map((blog) => (
-            <div
-              key={blog._id}
-              className="bg-white p-6 rounded-xl shadow"
-            >
-              {/* HEADER */}
-              <div className="flex justify-between items-start mb-2">
-                {editingId === blog._id ? (
-                  <input
-                    value={editForm.title}
-                    onChange={(e) =>
-                      setEditForm({ ...editForm, title: e.target.value })
-                    }
-                    className="text-xl font-bold border px-3 py-2 rounded w-full"
-                  />
-                ) : (
-                  <h2 className="text-xl font-bold">{blog.title}</h2>
-                )}
+      {/* TABS */}
+      <div className="flex gap-4 mb-8">
+        <button
+          onClick={() => setActiveTab("events")}
+          className={`px-6 py-2 rounded-lg font-semibold ${
+            activeTab === "events"
+              ? "bg-blue-600 text-white"
+              : "bg-white border"
+          }`}
+        >
+          Events
+        </button>
+        <button
+          onClick={() => setActiveTab("blogs")}
+          className={`px-6 py-2 rounded-lg font-semibold ${
+            activeTab === "blogs"
+              ? "bg-blue-600 text-white"
+              : "bg-white border"
+          }`}
+        >
+          Blogs
+        </button>
+      </div>
 
-                <span
-                  className={`px-3 py-1 rounded-full text-xs font-semibold ${statusStyle[blog.status]}`}
-                >
-                  {blog.status.toUpperCase()}
-                </span>
-              </div>
+      {/* EVENTS TAB */}
+      {activeTab === "events" && (
+        <>
+          <button
+            onClick={handleCreateEvent}
+            className="mb-6 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold"
+          >
+            Create New Event
+          </button>
 
-              <p className="text-sm text-gray-500 mb-3">
-                By {blog.authorName} ({blog.authorEmail})
-              </p>
-
-              {/* CONTENT */}
-              {editingId === blog._id ? (
-                <textarea
-                  value={editForm.content}
-                  onChange={(e) =>
-                    setEditForm({ ...editForm, content: e.target.value })
-                  }
-                  rows={6}
-                  className="w-full border px-3 py-2 rounded mb-4"
-                />
-              ) : (
-                <p className="whitespace-pre-wrap mb-4">
-                  {blog.content}
-                </p>
-              )}
-
-              {/* FILES */}
-              {blog.files?.length > 0 && (
-                <div className="mb-4">
-                  <h4 className="font-semibold mb-2">Attachments</h4>
-                  <div className="flex flex-wrap gap-3">
-                    {blog.files.map((file, i) => (
-                      <a
-                        key={i}
-                        href={file.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg"
-                      >
-                        {getIcon(file.mimetype)}
-                        <span className="text-sm truncate max-w-[160px]">
-                          {file.originalName}
-                        </span>
-                      </a>
-                    ))}
-                  </div>
+          <div className="grid md:grid-cols-2 gap-4">
+            {events.map((event) => (
+              <div
+                key={event._id}
+                className="bg-white p-4 rounded-xl shadow flex justify-between items-start"
+              >
+                <div>
+                  <h3 className="font-bold">{event.title}</h3>
+                  <p className="text-sm text-gray-500">{event.date}</p>
                 </div>
-              )}
 
-              {/* ACTIONS */}
-              <div className="flex flex-wrap gap-3">
-                {blog.status !== "approved" && (
+                <div className="flex gap-2">
                   <button
-                    onClick={() => updateStatus(blog._id, "approve")}
-                    className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg"
-                  >
-                    <Check className="w-4 h-4" />
-                    Approve
-                  </button>
-                )}
-
-                {blog.status !== "rejected" && (
-                  <button
-                    onClick={() => updateStatus(blog._id, "reject")}
-                    className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg"
-                  >
-                    <X className="w-4 h-4" />
-                    Reject
-                  </button>
-                )}
-
-                {editingId === blog._id ? (
-                  <button
-                    onClick={() => saveEdit(blog._id)}
-                    className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg"
-                  >
-                    <Save className="w-4 h-4" />
-                    Save
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => startEdit(blog)}
-                    className="flex items-center gap-2 bg-gray-700 text-white px-4 py-2 rounded-lg"
+                    onClick={() => handleEditEvent(event)}
+                    className="bg-indigo-600 text-white p-2 rounded"
                   >
                     <Edit2 className="w-4 h-4" />
-                    Edit
                   </button>
-                )}
+                  <button
+                    onClick={() => handleDeleteEvent(event._id)}
+                    className="bg-red-600 text-white p-2 rounded"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
 
+      {/* BLOGS TAB */}
+      {activeTab === "blogs" && (
+        <div className="space-y-6">
+          {blogs.map((blog) => (
+            <div key={blog._id} className="bg-white p-6 rounded-xl shadow">
+              <h2 className="text-xl font-bold">{blog.title}</h2>
+              <p className="text-sm text-gray-500 mb-4">
+                {blog.authorName} ({blog.authorEmail})
+              </p>
+
+              <p className="mb-4">{blog.content}</p>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={() => updateStatus(blog._id, "approve")}
+                  className="bg-green-600 text-white px-4 py-2 rounded"
+                >
+                  Approve
+                </button>
+                <button
+                  onClick={() => updateStatus(blog._id, "reject")}
+                  className="bg-red-600 text-white px-4 py-2 rounded"
+                >
+                  Reject
+                </button>
                 <button
                   onClick={() => deleteBlog(blog._id)}
-                  className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg"
+                  className="bg-black text-white px-4 py-2 rounded"
                 >
-                  <Trash2 className="w-4 h-4" />
                   Delete
                 </button>
               </div>
             </div>
           ))}
         </div>
+      )}
+
+      {showEventForm && (
+        <AdminEventForm
+          event={editingEvent}
+          onClose={() => {
+            setShowEventForm(false);
+            setEditingEvent(null);
+          }}
+          onSave={handleSaveEvent}
+        />
       )}
     </div>
   );
