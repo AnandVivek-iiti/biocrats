@@ -1,13 +1,4 @@
-// import { Resend } from 'resend';
 
-// const resend = new Resend('re_YfX4Cp4u_P8PPk9YrkrtmTbKhqKYbuysx');
-
-// resend.emails.send({
-//   from: 'onboarding@resend.dev',
-//   to: 'anand1234.vivek@gmail.com',
-//   subject: 'Hello World',
-//   html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
-// });
 import { Resend } from "resend";
 
 let resend = null;
