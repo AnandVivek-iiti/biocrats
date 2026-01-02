@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
-
-import logo from "../assets/logo.png";
-import {Events} from "../data/Events/eventsdata";
 import {
-  Calendar,
   MapPin,
   Users,
   ArrowRight,
@@ -11,21 +7,14 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  Plus,
-  Edit,
-  Trash2,
-  Upload,
-  Save,
   Clock,
-  FileText,
+  Calendar,
   Image,
   File,
 } from "lucide-react";
+import logo from "../assets/logo.png";
 
-// API Configuration
-const API_URL = "https://biocrats.onrender.com/api";
-
-// --- HELPER FUNCTIONS ---
+const API_URL = "http://localhost:5000/api";
 
 // Function to normalize image URLs
 const normalizeImageUrl = (imagePath) => {
@@ -37,7 +26,9 @@ const normalizeImageUrl = (imagePath) => {
   }
 
   // If it's a relative path, prepend API URL
-  return `${API_URL.replace("/api", "")}${imagePath.startsWith("/") ? "" : "/"}${imagePath}`;
+  return `${API_URL.replace("/api", "")}${
+    imagePath.startsWith("/") ? "" : "/"
+  }${imagePath}`;
 };
 
 // Function to get icon based on file type
@@ -98,7 +89,8 @@ const ImageGalleryModal = ({ images, currentIndex, onClose, onNavigate }) => {
           alt={`Event ${currentIndex + 1}`}
           className="max-w-full max-h-full object-contain"
           onError={(e) => {
-            e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23f0f0f0' width='400' height='300'/%3E%3Ctext fill='%23999' x='50%25' y='50%25' text-anchor='middle' dy='.3em'%3EImage not found%3C/text%3E%3C/svg%3E";
+            e.target.src =
+              "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23f0f0f0' width='400' height='300'/%3E%3Ctext fill='%23999' x='50%25' y='50%25' text-anchor='middle' dy='.3em'%3EImage not found%3C/text%3E%3C/svg%3E";
           }}
         />
         {images.length > 1 && (
@@ -111,7 +103,6 @@ const ImageGalleryModal = ({ images, currentIndex, onClose, onNavigate }) => {
   );
 };
 
-// Event Details Modal Component
 const EventDetailsModal = ({ event, onClose, onImageClick }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -121,16 +112,15 @@ const EventDetailsModal = ({ event, onClose, onImageClick }) => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
-
   return (
-    <div className="fixed inset-0 z-40 overflow-y-auto">
-      <div className="flex min-h-screen items-center justify-center p-4">
+    <div className="fixed inset-10 min-h-screen  z-40  overflow-y-auto">
+      <div className="flex min-h-screen  items-center justify-center p-4">
         <div
           className="fixed inset-0 bg-black bg-opacity-50"
           onClick={onClose}
         ></div>
 
-        <div className="relative bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="relative bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[80vh] overflow-y-auto">
           <div className="sticky top-0 bg-white p-4 pb-0 flex justify-end z-10 border-b">
             <button
               onClick={onClose}
@@ -142,36 +132,6 @@ const EventDetailsModal = ({ event, onClose, onImageClick }) => {
           </div>
 
           <div className="p-6 pt-4 sm:p-8">
-            {event.images && event.images.length > 0 && (
-              <div
-                className={`grid gap-2 mb-6 ${
-                  event.images.length === 1
-                    ? "grid-cols-1"
-                    : event.images.length === 2
-                    ? "grid-cols-2"
-                    : "grid-cols-2 sm:grid-cols-3"
-                }`}
-              >
-                {event.images.map((img, idx) => (
-                  <div
-                    key={idx}
-                    className="relative overflow-hidden rounded-lg cursor-pointer group aspect-video"
-                    onClick={() => onImageClick(idx)}
-                  >
-                    <img
-                      src={normalizeImageUrl(img)}
-                      alt={`${event.title} ${idx + 1}`}
-                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
-                      onError={(e) => {
-                        e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23f0f0f0' width='400' height='300'/%3E%3Ctext fill='%23999' x='50%25' y='50%25' text-anchor='middle' dy='.3em'%3EImage not available%3C/text%3E%3C/svg%3E";
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300"></div>
-                  </div>
-                ))}
-              </div>
-            )}
-
             <span
               className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 ${
                 event.status === "Past Event"
@@ -223,365 +183,8 @@ const EventDetailsModal = ({ event, onClose, onImageClick }) => {
   );
 };
 
-// Admin Event Form Modal
-const AdminEventForm = ({ event, onClose, onSave }) => {
-  const [formData, setFormData] = useState({
-    title: event?.title || "",
-    description: event?.description || "",
-    fullDescription: event?.fullDescription || "",
-    status: event?.status || "Upcoming",
-    date: event?.date || "",
-    location: event?.location || "",
-    participants: event?.participants || "",
-    speaker: event?.speaker || event?.Speaker || "",
-    category: event?.category || "workshop",
-  });
-  const [images, setImages] = useState([]);
-  const [existingImages, setExistingImages] = useState(event?.images || []);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError("");
-  };
-
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-
-    // Validate file types
-    const validFiles = files.filter(file => {
-      const isImage = file.type.startsWith("image/");
-      if (!isImage) {
-        setError(`File ${file.name} is not an image`);
-      }
-      return isImage;
-    });
-
-    // Validate file sizes (max 5MB per file)
-    const validSizedFiles = validFiles.filter(file => {
-      const isValidSize = file.size <= 5 * 1024 * 1024;
-      if (!isValidSize) {
-        setError(`File ${file.name} is too large (max 5MB)`);
-      }
-      return isValidSize;
-    });
-
-    setImages(validSizedFiles);
-  };
-
-  const removeExistingImage = (index) => {
-    setExistingImages(existingImages.filter((_, i) => i !== index));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-
-    try {
-      const data = new FormData();
-      Object.keys(formData).forEach((key) => {
-        data.append(key, formData[key]);
-      });
-
-      existingImages.forEach((img) => {
-        data.append("existingImages", img);
-      });
-
-      images.forEach((img) => {
-        data.append("images", img);
-      });
-
-      await onSave(data);
-    } catch (err) {
-      setError(err.message || "Failed to save event");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="flex min-h-screen items-center justify-center p-4">
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50"
-          onClick={onClose}
-        ></div>
-
-        <div className="relative bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-          <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between z-10">
-            <h2 className="text-2xl font-bold text-slate-900">
-              {event ? "Edit Event" : "Create New Event"}
-            </h2>
-            <button
-              onClick={onClose}
-              className="text-gray-500 hover:text-gray-700"
-              aria-label="Close form"
-            >
-              <X className="w-6 h-6" />
-            </button>
-          </div>
-
-          <form onSubmit={handleSubmit} className="p-6 space-y-6">
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-                {error}
-              </div>
-            )}
-
-            <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
-                Event Title *
-              </label>
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter event title"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Status *
-                </label>
-                <select
-                  name="status"
-                  value={formData.status}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="Upcoming">Upcoming</option>
-                  <option value="Past Event">Past Event</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Category *
-                </label>
-                <select
-                  name="category"
-                  value={formData.category}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="workshop">Workshop</option>
-                  <option value="competition">Competition</option>
-                  <option value="symposium">Symposium</option>
-                  <option value="seminar">Seminar</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
-                Short Description *
-              </label>
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                required
-                rows="3"
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Brief description for event card"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
-                Full Description
-              </label>
-              <textarea
-                name="fullDescription"
-                value={formData.fullDescription}
-                onChange={handleChange}
-                rows="6"
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Detailed description (optional)"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Date *
-                </label>
-                <input
-                  type="text"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleChange}
-                  required
-                  placeholder="e.g., November 15, 2025"
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Location
-                </label>
-                <input
-                  type="text"
-                  name="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  placeholder="e.g., Main Auditorium, IIT Indore"
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Participants
-                </label>
-                <input
-                  type="text"
-                  name="participants"
-                  value={formData.participants}
-                  onChange={handleChange}
-                  placeholder="e.g., 150+ participants expected"
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Speaker
-                </label>
-                <input
-                  type="text"
-                  name="speaker"
-                  value={formData.speaker}
-                  onChange={handleChange}
-                  placeholder="e.g., Dr. John Doe"
-                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
-                Event Images
-              </label>
-
-              {existingImages.length > 0 && (
-                <div className="mb-4">
-                  <p className="text-sm text-slate-600 mb-2">
-                    Existing Images:
-                  </p>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    {existingImages.map((img, idx) => (
-                      <div key={idx} className="relative group">
-                        <img
-                          src={normalizeImageUrl(img)}
-                          alt={`Event ${idx}`}
-                          className="w-full h-24 object-cover rounded"
-                          onError={(e) => {
-                            e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect fill='%23f0f0f0' width='100' height='100'/%3E%3C/svg%3E";
-                          }}
-                        />
-                        <button
-                          type="button"
-                          onClick={() => removeExistingImage(idx)}
-                          className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                          aria-label="Remove image"
-                        >
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-indigo-400 transition-colors">
-                <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <input
-                  type="file"
-                  multiple
-                  onChange={handleImageChange}
-                  className="hidden"
-                  id="file-upload"
-                  accept="image/*"
-                />
-                <label
-                  htmlFor="file-upload"
-                  className="cursor-pointer text-indigo-600 hover:text-indigo-700 font-semibold text-lg"
-                >
-                  Click to upload images
-                </label>
-                <p className="text-sm text-gray-500 mt-2">Max 5MB per image</p>
-              </div>
-
-              {images.length > 0 && (
-                <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  {images.map((file, idx) => (
-                    <div key={idx} className="relative">
-                      <img
-                        src={URL.createObjectURL(file)}
-                        alt="Preview"
-                        className="w-full h-24 object-cover rounded"
-                      />
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setImages((prev) => prev.filter((_, i) => i !== idx))
-                        }
-                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
-                        aria-label="Remove new image"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="flex gap-4 pt-4">
-              <button
-                type="submit"
-                disabled={loading}
-                className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                <Save className="w-5 h-5" />
-                {loading ? "Saving..." : "Save Event"}
-              </button>
-              <button
-                type="button"
-                onClick={onClose}
-                disabled={loading}
-                className="px-6 py-3 border border-slate-300 rounded-lg font-semibold hover:bg-slate-50 transition-colors disabled:opacity-50"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 // Event Card Component
-const EventCard = ({
-  event,
-  onReadMore,
-  onImageClick,
-  isAdmin,
-  onEdit,
-  onDelete,
-}) => {
+const EventCard = ({ event, onReadMore, onImageClick }) => {
   const isPastEvent = event.status === "Past Event";
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -600,7 +203,7 @@ const EventCard = ({
   const currentImage = event.images?.[currentImageIndex] || "";
 
   return (
-    <div className="group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col">
+    <div className="group  bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col">
       <div className="relative overflow-hidden h-48 sm:h-56">
         <div
           className="w-full h-full bg-center bg-cover transform group-hover:scale-105 transition-transform duration-500 cursor-pointer"
@@ -654,31 +257,6 @@ const EventCard = ({
             </div>
           </>
         )}
-
-        {isAdmin && (
-          <div className="absolute top-4 left-4 flex gap-2">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onEdit(event);
-              }}
-              className="bg-blue-600 text-white rounded-full p-2 hover:bg-blue-700 transition-colors shadow-lg"
-              aria-label="Edit event"
-            >
-              <Edit className="w-4 h-4" />
-            </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onDelete(event);
-              }}
-              className="bg-red-600 text-white rounded-full p-2 hover:bg-red-700 transition-colors shadow-lg"
-              aria-label="Delete event"
-            >
-              <Trash2 className="w-4 h-4" />
-            </button>
-          </div>
-        )}
       </div>
 
       <div className="p-5 sm:p-6 flex flex-col flex-grow">
@@ -729,19 +307,16 @@ const EventCard = ({
   );
 };
 
-// Main Component
-const BiocatsEventsPage = () => {
+const Events = () => {
+  const [events, setEvents] = useState([]);
   const [activeFilter, setActiveFilter] = useState("all");
-  const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [galleryOpen, setGalleryOpen] = useState(false);
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [showEventForm, setShowEventForm] = useState(false);
-  const [editingEvent, setEditingEvent] = useState(null);
 
   const categories = [
     { id: "all", label: "All Categories" },
@@ -750,168 +325,6 @@ const BiocatsEventsPage = () => {
     { id: "symposium", label: "Symposiums" },
     { id: "seminar", label: "Seminars" },
   ];
-
-  useEffect(() => {
-    fetchEvents();
-    checkAdminStatus();
-  }, []);
-
-  const checkAdminStatus = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setIsAdmin(false);
-      return;
-    }
-
-    try {
-      const response = await fetch(`${API_URL}/profile`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        setIsAdmin(data.user?.isAdmin || false);
-      } else {
-        setIsAdmin(false);
-      }
-    } catch (error) {
-      console.error("Error checking admin status:", error);
-      setIsAdmin(false);
-    }
-  };
-
-  const fetchEvents = async () => {
-    try {
-      setLoading(true);
-      setError("");
-
-      const token = localStorage.getItem("token");
-
-      // Always show hardcoded events
-      let apiEvents = [];
-
-      // Try to fetch from API if token exists
-      if (token) {
-        try {
-          const response = await fetch(`${API_URL}/events`);
-
-          if (response.ok) {
-            const data = await response.json();
-            if (data.success && Array.isArray(data.events)) {
-              apiEvents = data.events;
-            }
-          }
-        } catch (apiError) {
-          console.error("Error fetching API events:", apiError);
-          // Continue with hardcoded events even if API fails
-        }
-      }
-
-      // Merge API events with hardcoded events, avoiding duplicates
-      const apiEventIds = new Set(apiEvents.map(e => e._id || e.id));
-      const uniqueEvents = Events.filter(
-        e => !apiEventIds.has(e._id)
-      );
-
-      const allEvents = [...apiEvents, ...uniqueEvents];
-      setEvents(allEvents);
-
-    } catch (error) {
-      console.error("Error fetching events:", error);
-      // On error, still show hardcoded events
-      setEvents(Events);
-      setError("Some events may not be available. Showing cached events.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleCreateEvent = () => {
-    setEditingEvent(null);
-    setShowEventForm(true);
-  };
-
-  const handleEditEvent = (event) => {
-    setEditingEvent(event);
-    setShowEventForm(true);
-  };
-
-  const handleSaveEvent = async (formData) => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        alert("Please login as admin to perform this action");
-        return;
-      }
-
-      const url = editingEvent
-        ? `${API_URL}/events/${editingEvent._id || editingEvent.id}`
-        : `${API_URL}/events`;
-
-      const method = editingEvent ? "PUT" : "POST";
-
-      const response = await fetch(url, {
-        method,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        alert(data.message || "Event saved successfully");
-        setShowEventForm(false);
-        setEditingEvent(null);
-        await fetchEvents();
-      } else {
-        throw new Error(data.message || "Failed to save event");
-      }
-    } catch (error) {
-      console.error("Error saving event:", error);
-      alert(`Error: ${error.message}`);
-    }
-  };
-
-  const handleDeleteEvent = async (event) => {
-    if (!window.confirm(`Are you sure you want to delete "${event.title}"?`)) {
-      return;
-    }
-
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        alert("Please login as admin to perform this action");
-        return;
-      }
-
-      const response = await fetch(
-        `${API_URL}/events/${event._id || event.id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      const data = await response.json();
-
-      if (data.success) {
-        alert(data.message || "Event deleted successfully");
-        await fetchEvents();
-      } else {
-        throw new Error(data.message || "Failed to delete event");
-      }
-    } catch (error) {
-      console.error("Error deleting event:", error);
-      alert(`Error: ${error.message}`);
-    }
-  };
 
   const filteredEvents = events.filter((event) => {
     const matchesStatus =
@@ -938,8 +351,7 @@ const BiocatsEventsPage = () => {
     setCurrentImageIndex(index);
     setGalleryOpen(true);
   };
-
-  const handleGalleryNavigate = (direction) => {
+    const handleGalleryNavigate = (direction) => {
     if (!selectedEvent || !selectedEvent.images) return;
 
     if (direction === "next") {
@@ -951,11 +363,16 @@ const BiocatsEventsPage = () => {
       );
     }
   };
+  useEffect(() => {
+    fetch(`${API_URL}/events`)
+      .then((res) => res.json())
+      .then((data) => setEvents(data.events || []));
+  }, []);
+
+
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
-      <div className="absolute inset-0 bg-grid-slate-100 opacity-50 -z-10"></div>
-
+    <div className="min-h-screen bg-slate-50 p-6 sm:p-12">
       <main className="relative px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-12 sm:mb-16">
@@ -976,39 +393,6 @@ const BiocatsEventsPage = () => {
               biotechnology. 🧬
             </p>
           </div>
-
-          {/* Admin Panel */}
-          {isAdmin && (
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-lg p-6 mb-8">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="text-white text-center sm:text-left">
-                  <h3 className="text-xl font-bold mb-1">Admin Panel</h3>
-                  <p className="text-blue-100 text-sm">Manage your events</p>
-                </div>
-                <button
-                  onClick={handleCreateEvent}
-                  className="flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors shadow-md"
-                >
-                  <Plus className="w-5 h-5" />
-                  Create New Event
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Error Display */}
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-8">
-              <p className="font-semibold">Error</p>
-              <p>{error}</p>
-              <button
-                onClick={fetchEvents}
-                className="mt-2 text-sm underline hover:no-underline"
-              >
-                Try again
-              </button>
-            </div>
-          )}
 
           {/* Filters */}
           <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 mb-8 sm:mb-10">
@@ -1075,9 +459,12 @@ const BiocatsEventsPage = () => {
               </div>
             </div>
           </div>
+        </div>
+      </main>
 
-          {/* Events Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+
+ {/* Events Grid */}
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {loading ? (
               <div className="col-span-full text-center py-16">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
@@ -1100,49 +487,51 @@ const BiocatsEventsPage = () => {
                   event={event}
                   onReadMore={handleReadMore}
                   onImageClick={handleImageClick}
-                  isAdmin={isAdmin}
-                  onEdit={handleEditEvent}
-                  onDelete={handleDeleteEvent}
                 />
               ))
             )}
-          </div>
-        </div>
-      </main>
+          </div> */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {filteredEvents.map((e) => (
+          <EventCard
+            key={e._id}
+            event={e}
+            onReadMore={setSelectedEvent}
+            onImageClick={(ev) => {
+              setSelectedEvent(ev);
+              setGalleryOpen(true);
+            }}
+          />
+        ))}
+      </div>
 
-      {/* Modals */}
       {selectedEvent && !galleryOpen && (
         <EventDetailsModal
           event={selectedEvent}
           onClose={() => setSelectedEvent(null)}
-          onImageClick={(index) => handleImageClick(selectedEvent, index)}
+          onImageClick={(i) => {
+            setCurrentIdx(i);
+            setGalleryOpen(true);
+          }}
         />
       )}
-
-      {galleryOpen && selectedEvent && (
+      {galleryOpen && (
         <ImageGalleryModal
-          images={selectedEvent.images || []}
-          currentIndex={currentImageIndex}
-          onClose={() => {
-            setGalleryOpen(false);
-            setCurrentImageIndex(0);
-          }}
-          onNavigate={handleGalleryNavigate}
-        />
-      )}
-
-      {showEventForm && (
-        <AdminEventForm
-          event={editingEvent}
-          onClose={() => {
-            setShowEventForm(false);
-            setEditingEvent(null);
-          }}
-          onSave={handleSaveEvent}
+          images={selectedEvent.images}
+          currentIndex={currentIdx}
+          onClose={() => setGalleryOpen(false)}
+          onNavigate={(d) =>
+            setCurrentIdx((p) =>
+              d === "next"
+                ? (p + 1) % selectedEvent.images.length
+                : (p - 1 + selectedEvent.images.length) %
+                  selectedEvent.images.length
+            )
+          }
         />
       )}
     </div>
   );
 };
 
-export default BiocatsEventsPage;
+export default Events;

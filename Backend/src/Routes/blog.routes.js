@@ -49,10 +49,8 @@ router.post("/submit", upload.array("files"), async (req, res) => {
       files,
     });
 
-    // ✅ Respond FIRST (fast UX)
     res.json({ message: "Blog submitted for admin approval", blog });
 
-    // 📧 Best-effort admin notification (non-blocking)
     sendMail({
       to: process.env.ADMIN_EMAIL,
       subject: "New blog pending approval",

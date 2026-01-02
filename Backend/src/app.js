@@ -5,8 +5,7 @@ import multer from "multer";
 
 import connectDB from "./config/database.js";
 
-import userRoutes from "./Routes/User.js";
-import eventRoutes from "./Routes/Event.js";
+import eventRoutes from "./Routes/events.routes.js";
 import blogRoutes from "./Routes/blog.routes.js";
 import adminRoutes from "./Routes/admin.routes.js";
 
@@ -55,7 +54,6 @@ app.get("/api/health", (_req, res) => {
 /* ======================
    ROUTES
    ====================== */
-app.use("/api", userRoutes);
 app.use("/api/blogs", blogRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/events", eventRoutes);

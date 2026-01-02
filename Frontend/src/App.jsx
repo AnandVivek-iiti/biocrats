@@ -12,9 +12,6 @@ import BiocratTeamPage from "./pages/Team";
 import ContactUs from "./pages/Contact";
 import NotFound from "./components/Notfound";
 import Footer from "./components/Footer";
-import LoginPage from "./pages/Login";
-import Signup from "./pages/Signup";
-
 import Blogs from "./pages/Blogs";
 import AdminPanel from "./pages/Adminpannel";
 function MainPage() {
@@ -81,8 +78,6 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<Signup />} />
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

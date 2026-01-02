@@ -1,6 +1,5 @@
 import express from "express";
 import Event from "../models/Event.js";
-import { authenticateAdmin } from "../middleware/auth.js";
 import { uploadEventImages } from "../middleware/upload.js";
 import cloudinary from "../config/cloudinary.js";
 
@@ -98,7 +97,6 @@ router.get("/:id", async (req, res) => {
 // CREATE new event (Admin only)
 router.post(
   "/",
-  authenticateAdmin,
   uploadEventImages.array("images", 10),
   async (req, res) => {
     try {
@@ -188,7 +186,6 @@ router.post(
 // UPDATE event (Admin only)
 router.put(
   "/:id",
-  authenticateAdmin,
   uploadEventImages.array("images", 10),
   async (req, res) => {
     try {
@@ -313,7 +310,7 @@ router.put(
 );
 
 // DELETE event (Admin only)
-router.delete("/:id", authenticateAdmin, async (req, res) => {
+router.delete("/:id",  async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
 

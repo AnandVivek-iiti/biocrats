@@ -31,7 +31,9 @@ router.put("/blogs/:id", adminAuth, async (req, res) => {
     }
 
     res.json({ message: "Blog updated", blog });
-  } catch (err) {
+  }
+  
+  catch (err) {
     res.status(500).json({ message: "Update failed" });
   }
 });

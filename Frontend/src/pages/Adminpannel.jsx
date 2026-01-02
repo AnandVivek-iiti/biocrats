@@ -1,12 +1,15 @@
-
 import { useState, useEffect } from "react";
 import {
   Check,
   X,
   Trash2,
   Edit2,
+  Plus,
   Save,
+  Eye,
+  EyeOff,
   FileText,
+  Lock,
   Image,
   Home,
   LogOut,
@@ -15,13 +18,13 @@ import {
 import AdminEventForm from "./createEvent";
 import toast from "react-hot-toast";
 
-const API_URL = "https://biocrats.onrender.com" ||
-"http://localhost:5000/api";
+const API_URL = "http://localhost:5000/api";
 
 export default function AdminPanel() {
   const [secret, setSecret] = useState("");
   const [authorized, setAuthorized] = useState(false);
   const [activeTab, setActiveTab] = useState("events");
+  const [showPassword, setShowPassword] = useState(false);
 
   const [blogs, setBlogs] = useState([]);
   const [events, setEvents] = useState([]);
@@ -316,26 +319,41 @@ export default function AdminPanel() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100">
         <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center">
-              <LogOut className="w-8 h-8 text-white transform rotate-180" />
-            </div>
             <h2 className="text-3xl font-bold text-gray-800">Admin Access</h2>
             <p className="text-gray-500 mt-2">
               Enter your secret key to continue
             </p>
           </div>
 
-          <input
-            type="password"
-            value={secret}
-            onChange={(e) => {
-              setSecret(e.target.value);
-              setError("");
-            }}
-            onKeyPress={(e) => e.key === "Enter" && login()}
-            className="w-full border-2 border-gray-200 px-4 py-3 rounded-xl mb-4 focus:border-indigo-600 focus:outline-none transition"
-            placeholder="Enter admin secret"
-          />
+          <div className="space-y-2 mb-4 ">
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={secret}
+                onChange={(e) => {
+                  setSecret(e.target.value);
+                  setError("");
+                }}
+                onKeyUp={(e) => e.key === "Enter" && login()}
+                required
+                className="w-full pl-11 pr-12 py-3 border border-gray-300   rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200"
+                placeholder="Enter admin secret"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                {showPassword ? (
+                  <EyeOff className="w-5 h-5" />
+                ) : (
+                  <Eye className="w-5 h-5" />
+                )}
+              </button>
+            </div>
+          </div>
 
           <button
             onClick={login}
@@ -423,9 +441,10 @@ export default function AdminPanel() {
               </h2>
               <button
                 onClick={handleCreateEvent}
-                className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition shadow-lg"
+                className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl flex flex-2 font-bold hover:from-blue-700 hover:to-blue-800 transition shadow-lg"
               >
-                + Create New Event
+<Plus  />
+                 Create New Event
               </button>
             </div>
 
