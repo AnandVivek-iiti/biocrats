@@ -1,3 +1,18 @@
+import { useState } from "react";
+import { X, Save, Upload } from "lucide-react";
+
+/* -----------------------
+   IMAGE URL NORMALIZER
+----------------------- */
+const normalizeImageUrl = (img) => {
+  if (!img) return "";
+  if (img.startsWith("http")) return img;
+  return `${
+    import.meta.env.MODE === "production"
+      ? "https://biocrats.vercel.app"
+      : "http://localhost:5000"
+  }${img}`;
+};
 
 // Admin Event Form Modal
 const AdminEventForm = ({ event, onClose, onSave }) => {
@@ -12,6 +27,7 @@ const AdminEventForm = ({ event, onClose, onSave }) => {
     speaker: event?.speaker || event?.Speaker || "",
     category: event?.category || "workshop",
   });
+
   const [images, setImages] = useState([]);
   const [existingImages, setExistingImages] = useState(event?.images || []);
   const [loading, setLoading] = useState(false);
@@ -25,21 +41,15 @@ const AdminEventForm = ({ event, onClose, onSave }) => {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
 
-    // Validate file types
-    const validFiles = files.filter(file => {
+    const validFiles = files.filter((file) => {
       const isImage = file.type.startsWith("image/");
-      if (!isImage) {
-        setError(`File ${file.name} is not an image`);
-      }
+      if (!isImage) setError(`File ${file.name} is not an image`);
       return isImage;
     });
 
-    // Validate file sizes (max 5MB per file)
-    const validSizedFiles = validFiles.filter(file => {
+    const validSizedFiles = validFiles.filter((file) => {
       const isValidSize = file.size <= 5 * 1024 * 1024;
-      if (!isValidSize) {
-        setError(`File ${file.name} is too large (max 5MB)`);
-      }
+      if (!isValidSize) setError(`File ${file.name} is too large (max 5MB)`);
       return isValidSize;
     });
 
@@ -90,11 +100,7 @@ const AdminEventForm = ({ event, onClose, onSave }) => {
             <h2 className="text-2xl font-bold text-slate-900">
               {event ? "Edit Event" : "Create New Event"}
             </h2>
-            <button
-              onClick={onClose}
-              className="text-gray-500 hover:text-gray-700"
-              aria-label="Close form"
-            >
+            <button onClick={onClose} className="text-gray-500">
               <X className="w-6 h-6" />
             </button>
           </div>
@@ -263,7 +269,8 @@ const AdminEventForm = ({ event, onClose, onSave }) => {
                           alt={`Event ${idx}`}
                           className="w-full h-24 object-cover rounded"
                           onError={(e) => {
-                            e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect fill='%23f0f0f0' width='100' height='100'/%3E%3C/svg%3E";
+                            e.target.src =
+                              "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect fill='%23f0f0f0' width='100' height='100'/%3E%3C/svg%3E";
                           }}
                         />
                         <button
@@ -328,16 +335,17 @@ const AdminEventForm = ({ event, onClose, onSave }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2"
               >
                 <Save className="w-5 h-5" />
                 {loading ? "Saving..." : "Save Event"}
               </button>
+
               <button
                 type="button"
                 onClick={onClose}
                 disabled={loading}
-                className="px-6 py-3 border border-slate-300 rounded-lg font-semibold hover:bg-slate-50 transition-colors disabled:opacity-50"
+                className="px-6 py-3 border border-slate-300 rounded-lg font-semibold"
               >
                 Cancel
               </button>
@@ -348,3 +356,5 @@ const AdminEventForm = ({ event, onClose, onSave }) => {
     </div>
   );
 };
+
+export default AdminEventForm;

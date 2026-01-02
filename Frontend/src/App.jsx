@@ -1,7 +1,7 @@
 import "./App.css";
 import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import toast, { Toaster } from "react-hot-toast";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -43,6 +43,7 @@ function MainPage() {
 
   return (
     <>
+       <Toaster position="top-right" />
       <Navbar />
       <main>
         <section id="home">
