@@ -16,19 +16,18 @@ import logo from "../assets/logo.png";
 
 const API_URL = "http://localhost:5000/api";
 
-// Function to normalize image URLs
+// --- HELPER COMPONENTS ---
+const DEFAULT_EVENT_IMAGE =
+  "https://res.cloudinary.com/demo/image/upload/v1690000000/event_fallback.jpg";
+
 const normalizeImageUrl = (imagePath) => {
-  if (!imagePath) return "";
+  if (!imagePath) return DEFAULT_EVENT_IMAGE;
 
-  // If it's already a full URL (Cloudinary or other CDN)
-  if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
-    return imagePath;
-  }
+  // Cloudinary or any CDN
+  if (imagePath.startsWith("http")) return imagePath;
 
-  // If it's a relative path, prepend API URL
-  return `${API_URL.replace("/api", "")}${
-    imagePath.startsWith("/") ? "" : "/"
-  }${imagePath}`;
+  // Local backend uploads
+  return `${API_URL.replace("/api", "")}/${imagePath.replace(/^\/+/, "")}`;
 };
 
 // Function to get icon based on file type
@@ -38,8 +37,6 @@ const getFileIcon = (mimeType) => {
   }
   return <File className="w-5 h-5 text-gray-500" />;
 };
-
-// --- HELPER COMPONENTS ---
 
 // Image Gallery Modal Component
 const ImageGalleryModal = ({ images, currentIndex, onClose, onNavigate }) => {
@@ -53,6 +50,18 @@ const ImageGalleryModal = ({ images, currentIndex, onClose, onNavigate }) => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose, onNavigate]);
+
+  const EventSkeleton = () => (
+  <div className="bg-white rounded-2xl shadow-md overflow-hidden animate-pulse">
+    <div className="h-48 bg-slate-200" />
+    <div className="p-5 space-y-3">
+      <div className="h-4 bg-slate-200 rounded w-3/4" />
+      <div className="h-3 bg-slate-200 rounded w-full" />
+      <div className="h-3 bg-slate-200 rounded w-5/6" />
+      <div className="h-10 bg-slate-200 rounded" />
+    </div>
+  </div>
+);
 
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-95 flex items-center justify-center p-4">
@@ -205,14 +214,17 @@ const EventCard = ({ event, onReadMore, onImageClick }) => {
   return (
     <div className="group  bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col">
       <div className="relative overflow-hidden h-48 sm:h-56">
-        <div
-          className="w-full h-full bg-center bg-cover transform group-hover:scale-105 transition-transform duration-500 cursor-pointer"
-          style={{
-            backgroundImage: `url("${normalizeImageUrl(currentImage)}")`,
-            backgroundColor: "#f0f0f0",
-          }}
+        <img
+          src={normalizeImageUrl(currentImage)}
+          alt={event.title}
+          loading="lazy"
           onClick={() => onImageClick(event, currentImageIndex)}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          onError={(e) => {
+            e.currentTarget.src = DEFAULT_EVENT_IMAGE;
+          }}
         />
+
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
         <div className="absolute top-4 right-4">
@@ -351,7 +363,7 @@ const Events = () => {
     setCurrentImageIndex(index);
     setGalleryOpen(true);
   };
-    const handleGalleryNavigate = (direction) => {
+  const handleGalleryNavigate = (direction) => {
     if (!selectedEvent || !selectedEvent.images) return;
 
     if (direction === "next") {
@@ -368,8 +380,6 @@ const Events = () => {
       .then((res) => res.json())
       .then((data) => setEvents(data.events || []));
   }, []);
-
-
 
   return (
     <div className="min-h-screen bg-slate-50 p-6 sm:p-12">
@@ -462,9 +472,8 @@ const Events = () => {
         </div>
       </main>
 
-
- {/* Events Grid */}
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      {/* Events Grid */}
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {loading ? (
               <div className="col-span-full text-center py-16">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
