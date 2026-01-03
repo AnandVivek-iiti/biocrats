@@ -86,7 +86,6 @@ const eventSchema = new mongoose.Schema(
 eventSchema.index({ status: 1, category: 1 });
 eventSchema.index({ createdAt: -1 });
 
-// Virtual for id field (for compatibility)
 eventSchema.virtual("id").get(function () {
   return this._id.toHexString();
 });

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X, Save, Upload } from "lucide-react";
-
+import DragDropUploader from "../components/drop";
+DragDropUploader
 /* -----------------------
    IMAGE URL NORMALIZER
 ----------------------- */

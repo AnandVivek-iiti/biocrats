@@ -15,4 +15,12 @@ console.log("Cloudinary Config:", {
   secret: process.env.CLOUDINARY_API_SECRET ? "Loaded" : "Missing",
 });
 
+export const deleteFromCloudinary = async (publicIds = []) => {
+  if (!publicIds.length) return;
+
+  // auto works for images, pdfs, docs
+  await cloudinary.api.delete_resources(publicIds, {
+    resource_type: "auto",
+  });
+};
 export default cloudinary;

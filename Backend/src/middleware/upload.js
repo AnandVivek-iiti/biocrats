@@ -1,29 +1,22 @@
 import multer from "multer";
-import cloudinary from "../config/cloudinary.js";
-
-const blogStorage = multer.diskStorage({
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
-const eventStorage = multer.diskStorage({
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
-
-
 
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = /jpeg|jpg|png|gif|pdf|doc|docx|txt/;
-  const extname = allowedTypes.test(file.originalname.toLowerCase());
-  if (extname) cb(null, true);
-  else
-    cb(
-      new Error(
-        "Invalid file type. Only images, PDFs, and documents are allowed."
-      )
-    );
+  const allowedMimeTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/jpg",
+    "image/gif",
+    "application/pdf",
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "text/plain",
+  ];
+
+  if (allowedMimeTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error("Unsupported file type"), false);
+  }
 };
 
 const imageFilter = (req, file, cb) => {
@@ -32,17 +25,15 @@ const imageFilter = (req, file, cb) => {
   if (extname) cb(null, true);
   else cb(new Error("Only image files are allowed!"));
 };
-
-// Blog file upload with Cloudinary
-export const upload = multer({
-  storage: blogStorage,
+export const uploadEventImages = multer({
+  storage: multer.memoryStorage(),
   limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+
   fileFilter,
 });
-
-// Event image upload with Cloudinary
-export const uploadEventImages = multer({
-  storage: eventStorage,
+export const uploadBlogfiles = multer({
+  storage: multer.memoryStorage(),
   limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+
   fileFilter: imageFilter,
 });
