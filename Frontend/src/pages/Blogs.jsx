@@ -1,4 +1,3 @@
-
 // import React, { useEffect, useState } from "react";
 // import { motion, AnimatePresence } from "framer-motion";
 // import logo from "../assets/logo.png";
@@ -513,12 +512,26 @@
 
 import React, { useEffect, useState } from "react";
 import {
-  Upload, FileText, File, X, Plus, Calendar,
-  ChevronRight, Send, Loader2, Eye, Download,
-  Maximize2, AlertCircle, CheckCircle2, Image
+  Upload,
+  FileText,
+  File,
+  X,
+  Plus,
+  Calendar,
+  ChevronRight,
+  Send,
+  Loader2,
+  Eye,
+  Download,
+  Maximize2,
+  AlertCircle,
+  CheckCircle2,
+  Image,
 } from "lucide-react";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL =     import.meta.env.MODE === "production"
+      ? "https://biocrats.onrender.com"
+      : "http://localhost:5000/api"
 
 // Image Preview Modal
 const ImagePreviewModal = ({ imageUrl, onClose }) => {
@@ -763,7 +776,7 @@ export default function BlogPlatform() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                  BioCrats Blog
+                  BioCrats Blogs
                 </h1>
                 <p className="text-xs text-slate-500 font-medium">
                   Share Your Knowledge
@@ -919,7 +932,8 @@ export default function BlogPlatform() {
                 Share Your Knowledge
               </h2>
               <p className="text-slate-600 text-lg">
-                Fill out the details below. Once approved, your blog will be published.
+                Fill out the details below. Once approved, your blog will be
+                published.
               </p>
             </div>
 
@@ -1000,10 +1014,7 @@ export default function BlogPlatform() {
                     id="file-upload"
                     accept="image/*,.pdf,.doc,.docx"
                   />
-                  <label
-                    htmlFor="file-upload"
-                    className="cursor-pointer block"
-                  >
+                  <label htmlFor="file-upload" className="cursor-pointer block">
                     <Upload className="w-16 h-16 text-indigo-400 mx-auto mb-4" />
                     <p className="text-indigo-600 hover:text-indigo-700 font-bold text-lg mb-2">
                       Click to upload files

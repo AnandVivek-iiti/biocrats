@@ -10,7 +10,7 @@ const normalizeImageUrl = (img) => {
   if (img.startsWith("http")) return img;
   return `${
     import.meta.env.MODE === "production"
-      ? "https://biocrats.vercel.app"
+      ? "https://biocrats.onrender.com"
       : "http://localhost:5000"
   }${img}`;
 };

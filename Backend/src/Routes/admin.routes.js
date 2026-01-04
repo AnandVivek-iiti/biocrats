@@ -16,7 +16,7 @@ router.get("/blogs", adminAuth, async (_req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to fetch blogs",
-      error: process.env.NODE_ENV === "development" ? err.message : undefined
+      error: process.env.NODE_ENV === "production" ? err.message : undefined
     });
   }
 });
@@ -64,7 +64,7 @@ router.put("/blogs/:id", adminAuth, async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Update failed",
-      error: process.env.NODE_ENV === "development" ? err.message : undefined
+      error: process.env.NODE_ENV === "production" ? err.message : undefined
     });
   }
 });
@@ -104,7 +104,7 @@ router.delete("/blogs/:id", adminAuth, async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Delete failed",
-      error: process.env.NODE_ENV === "development" ? err.message : undefined
+      error: process.env.NODE_ENV === "production" ? err.message : undefined
     });
   }
 });
@@ -159,7 +159,7 @@ router.put("/blogs/:id/approve", adminAuth, async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Approval failed",
-      error: process.env.NODE_ENV === "development" ? err.message : undefined
+      error: process.env.NODE_ENV === "production" ? err.message : undefined
     });
   }
 });
@@ -214,7 +214,7 @@ router.put("/blogs/:id/reject", adminAuth, async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Rejection failed",
-      error: process.env.NODE_ENV === "development" ? err.message : undefined
+      error: process.env.NODE_ENV === "production" ? err.message : undefined
     });
   }
 });
