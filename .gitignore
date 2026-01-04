@@ -35,6 +35,5 @@ coverage/
 
 # Local files
 *.local
-
 # upload folder
 Backend/uploads/
