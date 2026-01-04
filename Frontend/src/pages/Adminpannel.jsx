@@ -18,9 +18,8 @@ import {
 import AdminEventForm from "./createEvent";
 import toast from "react-hot-toast";
 
-const API_URL =    import.meta.env.MODE === "production"
-      ? "https://biocrats.onrender.com"
-      : "http://localhost:5000/api"
+const API_URL = import.meta.env.VITE_API_URL + "/api";
+
 
 export default function AdminPanel() {
   const [secret, setSecret] = useState("");

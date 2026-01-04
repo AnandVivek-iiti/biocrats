@@ -40,7 +40,7 @@ function MainPage() {
 
   return (
     <>
-       <Toaster position="top-right" />
+      <Toaster position="top-right" />
       <Navbar />
       <main>
         <section id="home">
