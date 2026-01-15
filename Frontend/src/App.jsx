@@ -19,6 +19,8 @@ import Blogs from "./pages/Blogs";
 import AdminPanel from "./pages/Adminpannel";
 import NotFound from "./components/Notfound";
 
+import { DevelopersSection } from "./components/Footer";
+
 /* =========================
    PUBLIC LAYOUT (HOME SITE)
    ========================= */
@@ -103,7 +105,7 @@ function App() {
         <Route path="/" element={<PublicLayout />} />
 
         <Route path="/admin" element={<AdminPanel />} />
-
+        <Route path="/developer" element={<DevelopersSection />} />
         {/* Fallback */}
         <Route path="*" element={<NotFound />} />
       </Routes>
