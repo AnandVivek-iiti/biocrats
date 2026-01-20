@@ -31,8 +31,6 @@ function PublicLayout() {
       if (!anchor) return;
 
       const href = anchor.getAttribute("href");
-
-      // ONLY handle in-page hash links like #about, #events
       if (href && href.startsWith("#") && !href.startsWith("#/")) {
         e.preventDefault();
         const targetId = href.substring(1);
@@ -101,12 +99,11 @@ function App() {
   return (
     <HashRouter>
       <Routes>
-        {/* Public Website */}
         <Route path="/" element={<PublicLayout />} />
 
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/developer" element={<DevelopersSection />} />
-        {/* Fallback */}
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </HashRouter>

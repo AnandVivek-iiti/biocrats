@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import {
   Upload,
@@ -20,7 +18,6 @@ import {
 } from "lucide-react";
 
 const API_URL = import.meta.env.VITE_API_URL + "/api";
-
 
 // Image Preview Modal
 const ImagePreviewModal = ({ imageUrl, onClose }) => {
@@ -378,7 +375,7 @@ export default function BlogPlatform() {
                               month: "long",
                               day: "numeric",
                               year: "numeric",
-                            }
+                            },
                           )}
                         </div>
                       </div>

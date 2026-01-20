@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, User, Briefcase, GraduationCap } from "lucide-react";
-import {alumniData} from "../data/Alumni/Alumni"
+import { alumniData } from "../data/Alumni/Alumni";
 const AlumniDirectory = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
@@ -23,17 +23,15 @@ const AlumniDirectory = () => {
     return matchesSearch && matchesFilter;
   });
 
-  // Generate initials for avatar
   const getInitials = (name) => {
     return name
       .split(" ")
-      .map(word => word[0])
+      .map((word) => word[0])
       .join("")
       .toUpperCase()
       .slice(0, 2);
   };
 
-  // Generate avatar color based on name
   const getAvatarColor = (name) => {
     const colors = [
       "bg-blue-500",
@@ -43,7 +41,7 @@ const AlumniDirectory = () => {
       "bg-pink-500",
       "bg-indigo-500",
       "bg-teal-500",
-      "bg-red-500"
+      "bg-red-500",
     ];
     const index = name.charCodeAt(0) % colors.length;
     return colors[index];
@@ -55,7 +53,6 @@ const AlumniDirectory = () => {
       style={{ fontFamily: '"Public Sans", "Noto Sans", sans-serif' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-
         {/* Header Section */}
         <div className="text-center mb-12">
           <h1 className="text-slate-900 text-5xl font-bold leading-tight tracking-tighter mb-4">
@@ -67,7 +64,6 @@ const AlumniDirectory = () => {
           </p>
         </div>
 
-        {/* Search and Filter Section */}
         <div className="mb-8 space-y-4">
           {/* Search Bar */}
           <div className="max-w-2xl mx-auto">
@@ -136,7 +132,9 @@ const AlumniDirectory = () => {
             >
               <div className="flex items-start gap-4">
                 {/* Avatar with Initials */}
-                <div className={`w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0 ring-4 ring-blue-50 group-hover:ring-blue-100 transition-all duration-300 ${getAvatarColor(alumni.name)} text-white text-xl font-bold`}>
+                <div
+                  className={`w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0 ring-4 ring-blue-50 group-hover:ring-blue-100 transition-all duration-300 ${getAvatarColor(alumni.name)} text-white text-xl font-bold`}
+                >
                   {getInitials(alumni.name)}
                 </div>
 
@@ -177,8 +175,12 @@ const AlumniDirectory = () => {
                   rel="noopener noreferrer"
                   className="px-4 py-2 border border-slate-200 text-slate-600 text-sm font-medium rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1"
                 >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                  <svg
+                    className="w-4 h-4"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                   </svg>
                   Connect
                 </a>

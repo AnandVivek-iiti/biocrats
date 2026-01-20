@@ -8,7 +8,6 @@ export default function ContactUs() {
         Contact Us – BioCrats Club
       </h1>
 
-      {/* Links Section */}
       <div className="grid gap-6 md:grid-cols-3 w-full max-w-4xl">
         <a
           href="mailto:biocrats@iiti.ac.in"
@@ -39,9 +38,6 @@ export default function ContactUs() {
         </a>
       </div>
 
-
-
-      {/* Map Section */}
       <div className="mt-10 w-full max-w-4xl">
         <h2 className="text-xl font-semibold text-gray-800 mb-4">
           Find Us Here

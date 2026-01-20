@@ -1,23 +1,3 @@
-// import cloudinary from "../config/cloudinary.js";
-
-// export const uploadToCloudinary = async (file, folder = "biocrats/events") => {
-//   return cloudinary.uploader.upload(
-//     `data:${file.mimetype};base64,${file.buffer.toString("base64")}`,
-//     {
-//       folder,
-//       resource_type: "image",
-//     }
-//   );
-// };
-// export const uploadToCloudinaryBlogs = async (file, folder = "biocrats/events") => {
-//   return cloudinary.uploader.upload(
-//     `data:${file.mimetype};base64,${file.buffer.toString("base64")}`,
-//     {
-//       folder,
-//       resource_type: "image",
-//     }
-//   );
-// };
 
 import cloudinary from "../config/cloudinary.js";
 

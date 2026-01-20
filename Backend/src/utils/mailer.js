@@ -66,7 +66,7 @@ export const sendMail = async ({ to, subject, html }) => {
 
   try {
     await resend.emails.send({
-      from: "Biocrats<no-reply biocrats@iiti.ac.in>",
+      from: "Biocrats<biocrats@iiti.ac.in>",
       to,
       subject,
       html: baseTemplate(html),

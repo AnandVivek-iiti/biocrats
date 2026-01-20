@@ -15,10 +15,9 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const Backend_Url = "https://biocrats.onrender.com";
+  const Backend_Url = import.meta.env.VITE_API_URL || "https://biocrats.onrender.com";
   const API_URL = `${Backend_Url}/api`;
 
-  // Scroll detection for Navbar background
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -27,7 +26,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll Spy Logic
   useEffect(() => {
     const handleScrollSpy = () => {
       const sections = [
@@ -103,7 +101,6 @@ const Navbar = () => {
     }
   };
 
-  // Auth & Profile Logic
   const handleAuthClick = (path) => {
     setIsMenuOpen(false);
     setIsUserMenuOpen(false);
@@ -139,7 +136,6 @@ const Navbar = () => {
     setIsUserMenuOpen(false);
   };
 
-  // --- Animation Variants ---
   const mobileMenuVariants = {
     closed: {
       opacity: 0,

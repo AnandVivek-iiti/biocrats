@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import {
   MapPin,
@@ -16,27 +15,27 @@ import {
 import logo from "../assets/logo.png";
 const API_URL = import.meta.env.VITE_API_URL + "/api";
 
-
-// Default fallback image as data URL (a gradient placeholder)
 const DEFAULT_IMAGE =
   "https://res.cloudinary.com/dqsycukrp/image/upload/v1761218076/uploads/blogs/sajbg3tpfvzdytrhl0ue.jpg";
 
-// Function to normalize image URLs for Cloudinary or local paths
 const normalizeImageUrl = (imagePath) => {
   if (!imagePath) return DEFAULT_IMAGE;
 
-  // If it's already a full URL (Cloudinary, CDN, etc.)
   if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
     return imagePath;
   }
-
-  // If it's a relative path, prepend API URL
   const baseUrl = API_URL.replace("/api", "");
   return `${baseUrl}${imagePath.startsWith("/") ? "" : "/"}${imagePath}`;
 };
 
 // Image component with error handling and loading state
-const SafeImage = ({ src, alt, className, onClick, showPlaceholder = true }) => {
+const SafeImage = ({
+  src,
+  alt,
+  className,
+  onClick,
+  showPlaceholder = true,
+}) => {
   const [imgSrc, setImgSrc] = useState(normalizeImageUrl(src));
   const [loaded, setLoaded] = useState(false);
 
@@ -65,8 +64,6 @@ const SafeImage = ({ src, alt, className, onClick, showPlaceholder = true }) => 
   );
 };
 
-
-// Image Gallery Modal Component
 const ImageGalleryModal = ({ images, currentIndex, onClose, onNavigate }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -125,7 +122,6 @@ const ImageGalleryModal = ({ images, currentIndex, onClose, onNavigate }) => {
   );
 };
 
-// Event Details Modal Component
 const EventDetailsModal = ({ event, onClose, onImageClick }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -170,8 +166,7 @@ const EventDetailsModal = ({ event, onClose, onImageClick }) => {
                 src={event.images[0]}
                 alt={event.title}
                 className="w-full h-full object-cover cursor-pointer"
-              onClick={() => onImageClick(event, 0)}
-
+                onClick={() => onImageClick(event, 0)}
                 showPlaceholder={true}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
@@ -234,8 +229,7 @@ const EventDetailsModal = ({ event, onClose, onImageClick }) => {
                     <div
                       key={idx}
                       className="relative aspect-square cursor-pointer group overflow-hidden rounded-lg"
-                     onClick={() => onImageClick(event, idx)}
-
+                      onClick={() => onImageClick(event, idx)}
                     >
                       <SafeImage
                         src={img}
@@ -273,29 +267,26 @@ const EventDetailsModal = ({ event, onClose, onImageClick }) => {
 const EventCard = ({ event, onReadMore, onImageClick }) => {
   const isPastEvent = event.status === "Past Event";
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-const images =
-  Array.isArray(event.images) && event.images.length > 0
-    ? event.images
-    : [DEFAULT_IMAGE];
+  const images =
+    Array.isArray(event.images) && event.images.length > 0
+      ? event.images
+      : [DEFAULT_IMAGE];
 
-const handleNextImage = (e) => {
-  e.stopPropagation();
-  setCurrentImageIndex((prev) => (prev + 1) % images.length);
-};
+  const handleNextImage = (e) => {
+    e.stopPropagation();
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  };
 
-const handlePrevImage = (e) => {
-  e.stopPropagation();
-  setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
-};
+  const handlePrevImage = (e) => {
+    e.stopPropagation();
+    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
 
-
-const currentImage = images[currentImageIndex];
-
+  const currentImage = images[currentImageIndex];
 
   return (
     <div className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col border border-gray-100">
       <div className="relative overflow-hidden h-52 sm:h-60 bg-gradient-to-br from-blue-50 to-purple-50">
-
         <SafeImage
           src={currentImage}
           alt={event.title}
@@ -465,7 +456,8 @@ const Events = () => {
     } else {
       setCurrentImageIndex(
         (prev) =>
-          (prev - 1 + selectedEvent.images.length) % selectedEvent.images.length
+          (prev - 1 + selectedEvent.images.length) %
+          selectedEvent.images.length,
       );
     }
   };
@@ -477,7 +469,7 @@ const Events = () => {
           {/* Header */}
           <div className="text-center mb-12 sm:mb-16">
             <div className="inline-flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-                            <img
+              <img
                 className="h-16 w-16 sm:h-20 sm:w-20 rounded-full shadow-xl ring-4 ring-blue-100"
                 src={logo}
                 alt="BioCrats Logo"
@@ -603,27 +595,25 @@ const Events = () => {
 
       {/* Modals */}
       {selectedEvent && !galleryOpen && (
-      <EventDetailsModal
-  event={selectedEvent}
-  onClose={() => setSelectedEvent(null)}
-  onImageClick={handleImageClick}
-/>
-
+        <EventDetailsModal
+          event={selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+          onImageClick={handleImageClick}
+        />
       )}
 
-   {galleryOpen && selectedEvent && (
-  <ImageGalleryModal
-    images={
-      selectedEvent.images && selectedEvent.images.length > 0
-        ? selectedEvent.images
-        : [DEFAULT_IMAGE]
-    }
-    currentIndex={currentImageIndex}
-    onClose={() => setGalleryOpen(false)}
-    onNavigate={handleGalleryNavigate}
-  />
-)}
-
+      {galleryOpen && selectedEvent && (
+        <ImageGalleryModal
+          images={
+            selectedEvent.images && selectedEvent.images.length > 0
+              ? selectedEvent.images
+              : [DEFAULT_IMAGE]
+          }
+          currentIndex={currentImageIndex}
+          onClose={() => setGalleryOpen(false)}
+          onNavigate={handleGalleryNavigate}
+        />
+      )}
     </div>
   );
 };
