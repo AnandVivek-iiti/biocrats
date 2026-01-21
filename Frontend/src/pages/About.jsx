@@ -60,16 +60,20 @@ const BiocratAboutPage = () => {
                   Our History
                 </h2>
                 <p className="text-lg text-slate-600 leading-relaxed">
-                  Founded in 2018, Biocrats Club has grown from a small group of
-                  enthusiastic students to a thriving hub for biotechnology
-                  enthusiasts at IIT Indore. Over the years, we have organized
-                  numerous workshops, seminars, and competitions, attracting
-                  participants from diverse academic backgrounds.
+                  Founded in 2018, Biocrats Club began as a collective of
+                  motivated IIT Indore students from the Biosciences and
+                  Biomedical Engineering community. What started as a small
+                  initiative has grown into a vibrant interdisciplinary platform
+                  that brings together biology, engineering, and technology
+                  under one umbrella.
                 </p>
                 <p className="text-lg text-slate-600 leading-relaxed">
-                  Our journey has been marked by a commitment to excellence and
-                  a passion for biotechnology, creating lasting impacts in the
-                  academic community and beyond.
+                  Over the years, the club has hosted a wide range of workshops,
+                  seminars, and competitions, encouraging collaboration across
+                  diverse academic backgrounds. Driven by curiosity and
+                  innovation, Biocrats Club continues to foster excellence and
+                  create meaningful impact within the academic ecosystem and
+                  beyond.
                 </p>
               </div>
               <div className="relative group">
@@ -140,11 +144,9 @@ const BiocratAboutPage = () => {
                     Vision
                   </h3>
                   <p className="text-slate-700 leading-relaxed">
-                    To be the leading student-led biotechnology club in India,
-                    recognized for our contributions to research, innovation,
-                    and education in the field. We aim to create a dynamic
-                    environment where students can develop their skills, network
-                    with experts, and make a meaningful impact.
+                    To be a leading student-led interdisciplinary club in India,
+                    driving research, innovation, and learning in biosciences
+                    and biomedical engineering.
                   </p>
                 </div>
 

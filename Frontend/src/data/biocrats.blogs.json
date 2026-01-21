@@ -1,0 +1,156 @@
+[
+  {
+    "title": "Advances in CRISPR Technology: A New Era of Gene Editing",
+    "content": "Gene editing has revolutionized biological research over the past decade. CRISPR-Cas9 technology has emerged as a powerful tool for precise genome modification, enabling researchers to target specific DNA sequences with unprecedented accuracy. This breakthrough has opened new avenues in treating genetic disorders, developing disease-resistant crops, and understanding fundamental biological processes. Recent developments in base editing and prime editing have further enhanced the precision and versatility of CRISPR systems. As we continue to refine these techniques, the potential applications in medicine, agriculture, and biotechnology seem limitless. However, ethical considerations and regulatory frameworks must evolve alongside these technological advances to ensure responsible use of gene editing technologies.",
+    "authorName": "Vibha Choudhary",
+    "authorEmail": "vibhachoudhary107@gmail.com",
+    "files": [
+      {
+        "url": "https://images.unsplash.com/photo-1581093458791-9d42e1c36137?w=1200",
+        "public_id": "crispr_lab_dna",
+        "originalName": "crispr_lab_dna.jpg",
+        "mimetype": "image/jpeg"
+      }
+    ],
+    "status": "approved",
+    "createdAt": { "$date": "2024-11-15T10:30:00.000Z" },
+    "updatedAt": { "$date": "2024-11-16T14:20:00.000Z" }
+  },
+  {
+    "title": "The Future of Proteomics in Drug Discovery",
+    "content": "Proteomics, the large-scale study of proteins, plays a crucial role in modern drug discovery and development. Understanding protein structure, function, and interactions provides invaluable insights into disease mechanisms and therapeutic targets.",
+    "authorName": "Moumita Pal",
+    "authorEmail": "moumitapal.cal@gmail.com",
+    "files": [
+      {
+        "url": "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=1200",
+        "public_id": "proteomics_img_002",
+        "originalName": "protein_analysis.jpg",
+        "mimetype": "image/jpeg"
+      }
+    ],
+    "status": "approved",
+    "createdAt": { "$date": "2024-10-22T09:15:00.000Z" },
+    "updatedAt": { "$date": "2024-10-23T11:45:00.000Z" }
+  },
+  {
+    "title": "Teaching Strategies for NEET Biology Preparation",
+    "content": "Preparing students for the NEET examination requires a comprehensive understanding of biological concepts and effective teaching methodologies.",
+    "authorName": "Yogesh Singh",
+    "authorEmail": "yashusingh711@gmail.com",
+    "files": [
+      {
+        "url": "https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=1200",
+        "public_id": "neet_biology_003",
+        "originalName": "cell_structure_diagram.jpg",
+        "mimetype": "image/jpeg"
+      }
+    ],
+    "status": "approved",
+    "createdAt": { "$date": "2024-09-10T14:00:00.000Z" },
+    "updatedAt": { "$date": "2024-09-11T16:30:00.000Z" }
+  },
+
+  {
+    "title": "Transitioning from Science to Management Consulting",
+    "content": "The journey from a science background to management consulting offers unique perspectives and valuable skills.",
+    "authorName": "Abhijeet Singh",
+    "authorEmail": "abhijeetsng802@gmail.com",
+    "files": [
+      {
+        "url": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200",
+        "public_id": "consulting_img_005",
+        "originalName": "consulting_presentation.jpg",
+        "mimetype": "image/jpeg"
+      }
+    ],
+    "status": "approved",
+    "createdAt": { "$date": "2024-12-01T08:45:00.000Z" },
+    "updatedAt": { "$date": "2024-12-01T08:45:00.000Z" }
+  },
+  {
+    "title": "Engineering Solutions in Biotechnology R&D",
+    "content": "The intersection of engineering and biotechnology creates innovative solutions for complex biological challenges.",
+    "authorName": "Nandini Singh",
+    "authorEmail": "ns95417.as.ns@gmail.com",
+    "files": [
+      {
+        "url": "https://images.unsplash.com/photo-1581093458791-9d42e1c36137?w=1200",
+        "public_id": "biotech_eng_006",
+        "originalName": "bioreactor_design.jpg",
+        "mimetype": "image/jpeg"
+      }
+    ],
+    "status": "approved",
+    "createdAt": { "$date": "2024-11-28T15:30:00.000Z" },
+    "updatedAt": { "$date": "2024-11-29T10:15:00.000Z" }
+  },
+  {
+    "title": "Computational Approaches in Modern Biological Research",
+    "content": "Computational biology has become indispensable in analyzing and interpreting vast amounts of biological data.",
+    "authorName": "Advait Sohani",
+    "authorEmail": "mt2302171010@alum.iiti.ac.in",
+    "files": [
+      {
+        "url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200",
+        "public_id": "compbio_img_007",
+        "originalName": "genomic_analysis.jpg",
+        "mimetype": "image/jpeg"
+      }
+    ],
+    "status": "approved",
+    "createdAt": { "$date": "2024-10-18T12:00:00.000Z" },
+    "updatedAt": { "$date": "2024-10-19T09:30:00.000Z" }
+  },
+  {
+    "title": "Synthetic Biology: Designing Life from Scratch",
+    "content": "Synthetic biology represents a paradigm shift in how we approach biological engineering.",
+    "authorName": "Surjyapratap Sarangi",
+    "authorEmail": "mt2302171009@alum.iiti.ac.in",
+    "files": [
+      {
+        "url": "https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=1200",
+        "public_id": "synbio_img_008",
+        "originalName": "synthetic_biology.jpg",
+        "mimetype": "image/jpeg"
+      }
+    ],
+    "status": "approved",
+    "createdAt": { "$date": "2024-09-25T13:45:00.000Z" },
+    "updatedAt": { "$date": "2024-09-26T11:20:00.000Z" }
+  },
+  {
+    "title": "Understanding Microbial Ecology and Environmental Applications",
+    "content": "Microbial ecology explores the relationships between microorganisms and their environments.",
+    "authorName": "Tuhin Sarkar",
+    "authorEmail": "tstuhin777@gmail.com",
+    "files": [
+      {
+        "url": "https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=1200",
+        "public_id": "microb_eco_009",
+        "originalName": "microbial_community.jpg",
+        "mimetype": "image/jpeg"
+      }
+    ],
+    "status": "approved",
+    "createdAt": { "$date": "2024-07-12T10:30:00.000Z" },
+    "updatedAt": { "$date": "2024-07-15T14:20:00.000Z" }
+  },
+  {
+    "title": "Career Opportunities in Biological Sciences Beyond Academia",
+    "content": "Biological sciences graduates have diverse career opportunities extending far beyond traditional academic research positions.",
+    "authorName": "Rahul Sharma",
+    "authorEmail": "rahulhry011@gmail.com",
+    "files": [
+      {
+        "url": "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=1200",
+        "public_id": "biology_career_path",
+        "originalName": "biology_career_path.jpg",
+        "mimetype": "image/jpeg"
+      }
+    ],
+    "status": "approved",
+    "createdAt": { "$date": "2024-12-10T16:00:00.000Z" },
+    "updatedAt": { "$date": "2024-12-10T16:00:00.000Z" }
+  }
+]

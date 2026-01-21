@@ -1,37 +1,8 @@
 export const alumniData = [
+
+
   {
     id: 1,
-    name: "Rudrajit Mandal",
-    email: "email.rudrajit14@gmail.com",
-    year: "2023",
-    program: "M.Sc.",
-    jobRole: "Student",
-    category: "academia",
-    linkedin: "https://www.linkedin.com/in/rudrajit-mandal",
-  },
-  {
-    id: 2,
-    name: "Sushma",
-    email: "sushmaahirwar2112@gmail.com",
-    year: "2023",
-    program: "M.Sc.",
-    jobRole:
-      "Zoology teacher in senior division at Allen Career Institute, Indore",
-    category: "academia",
-    linkedin: "https://www.linkedin.com/in/sushma",
-  },
-  {
-    id: 3,
-    name: "Duddugunta Mohanchaitanya Reddy",
-    email: "dmohanchaitanyareddy@gmail.com",
-    year: "2023",
-    program: "M.Sc.",
-    jobRole: "Pursuing PhD",
-    category: "research",
-    linkedin: "https://www.linkedin.com/in/mohanchaitanya-reddy",
-  },
-  {
-    id: 4,
     name: "Mallar Dasgupta",
     email: "abirpathabhavan@gmail.com",
     year: "2024",
@@ -42,7 +13,7 @@ export const alumniData = [
     linkedin: "https://www.linkedin.com/in/mallar-dasgupta",
   },
   {
-    id: 5,
+    id: 2,
     name: "Priyanka Patra",
     email: "009priyankapatra@gmail.com",
     year: "2023",
@@ -52,7 +23,7 @@ export const alumniData = [
     linkedin: "https://www.linkedin.com/in/priyanka-patra",
   },
   {
-    id: 6,
+    id: 3,
     name: "Sampurna Dasgupta",
     email: "sampurnadasgupta2011@gmail.com",
     year: "2023",
@@ -62,7 +33,7 @@ export const alumniData = [
     linkedin: "https://www.linkedin.com/in/sampurna-dasgupta",
   },
   {
-    id: 7,
+    id: 4,
     name: "Akash Nigam",
     email: "akashnigam64@gmail.com",
     year: "2024",
@@ -70,6 +41,37 @@ export const alumniData = [
     jobRole: "Currently studying",
     category: "academia",
     linkedin: "https://www.linkedin.com/in/akash-nigam",
+  },
+  {
+    id: 5,
+    name: "Sushma",
+    email: "sushmaahirwar2112@gmail.com",
+    year: "2023",
+    program: "M.Sc.",
+    jobRole:
+      "Zoology teacher in senior division at Allen Career Institute, Indore",
+    category: "academia",
+    linkedin: "https://www.linkedin.com/in/sushma",
+  },
+  {
+    id: 6,
+    name: "Duddugunta Mohanchaitanya Reddy",
+    email: "dmohanchaitanyareddy@gmail.com",
+    year: "2023",
+    program: "M.Sc.",
+    jobRole: "Pursuing PhD",
+    category: "research",
+    linkedin: "https://www.linkedin.com/in/mohanchaitanya-reddy",
+  },
+  {
+    id: 7,
+    name: "Rudrajit Mandal",
+    email: "email.rudrajit14@gmail.com",
+    year: "2023",
+    program: "M.Sc.",
+    jobRole: "Student",
+    category: "academia",
+    linkedin: "https://www.linkedin.com/in/rudrajit-mandal",
   },
   {
     id: 8,
@@ -142,6 +144,7 @@ export const alumniData = [
     category: "academia",
     linkedin: "http://linkedin.com/in/advait-sohani-2b4729171",
   },
+
   {
     id: 15,
     name: "Surjyapratap Sarangi",
@@ -213,4 +216,5 @@ export const alumniData = [
     linkedin:
       "https://www.linkedin.com/in/mahesh-sahu-92b08826b/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BY58zB%2BLUTwidTpsR435%2BAg%3D%3D",
   },
+
 ];

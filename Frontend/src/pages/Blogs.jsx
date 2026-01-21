@@ -18,7 +18,6 @@ import {
 } from "lucide-react";
 
 const API_URL = import.meta.env.VITE_API_URL + "/api";
-
 // Image Preview Modal
 const ImagePreviewModal = ({ imageUrl, onClose }) => {
   return (
@@ -28,7 +27,7 @@ const ImagePreviewModal = ({ imageUrl, onClose }) => {
     >
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 text-white hover:text-gray-300 bg-black/50 rounded-full p-2 backdrop-blur-sm"
+        className="absolute top-4 right-4 text-white hover:text-gray-300 bg-black/50 rounded-full p-2 backdrop-blur-sm z-10"
       >
         <X className="w-6 h-6" />
       </button>
@@ -42,111 +41,120 @@ const ImagePreviewModal = ({ imageUrl, onClose }) => {
   );
 };
 
-// File Preview Component
+// PDF Preview Modal
+const PDFPreviewModal = ({ pdfUrl, fileName, onClose }) => {
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-6xl h-[90vh] bg-white rounded-lg overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between p-4 bg-slate-800 text-white">
+          <h3 className="text-lg font-semibold truncate flex-1">{fileName}</h3>
+          <div className="flex items-center gap-2">
+            <a
+              href={pdfUrl}
+              download
+              className="hover:bg-slate-700 p-2 rounded-lg transition-colors"
+              title="Download PDF"
+            >
+              <Download className="w-5 h-5" />
+            </a>
+            <button
+              onClick={onClose}
+              className="hover:bg-slate-700 p-2 rounded-lg transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+        <iframe src={pdfUrl} className="w-full h-full" title="PDF Preview" />
+      </div>
+    </div>
+  );
+};
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=1200";
+
 const FilePreview = ({ file, index, onRemove, isUploaded = false }) => {
-  const [preview, setPreview] = useState(null);
-  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   useEffect(() => {
-    if (!isUploaded && file.type?.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onloadend = () => setPreview(reader.result);
-      reader.readAsDataURL(file);
-    } else if (isUploaded && file.mimetype?.startsWith("image/")) {
-      setPreview(file.url);
+    if (isUploaded && file.url) {
+      setPreviewUrl(file.url);
+    } else if (file) {
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+      return () => URL.revokeObjectURL(url);
     }
   }, [file, isUploaded]);
 
-  const getFileIcon = () => {
-    const type = isUploaded ? file.mimetype : file.type;
-    if (type?.startsWith("image/")) return <Image className="w-5 h-5" />;
-    if (type === "application/pdf") return <FileText className="w-5 h-5" />;
-    return <File className="w-5 h-5" />;
-  };
-
-  const formatFileSize = (bytes) => {
-    if (bytes < 1024) return bytes + " B";
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + " KB";
-    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
-  };
+  const type = isUploaded ? file.mimetype : file.type || "";
+  const isImage = type.startsWith("image/");
+  const isPDF = type === "application/pdf";
 
   const fileName = isUploaded ? file.originalName : file.name;
-  const fileSize = isUploaded ? file.size : file.size;
-  const isImage = isUploaded
-    ? file.mimetype?.startsWith("image/")
-    : file.type?.startsWith("image/");
+
+  const handleOpen = () => {
+    if (previewUrl) {
+      window.open(previewUrl, "_blank", "noopener,noreferrer");
+    }
+  };
 
   return (
-    <>
-      <div className="group relative bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border-2 border-slate-200 hover:border-indigo-300 transition-all overflow-hidden">
-        {preview ? (
-          <div className="relative h-32 bg-slate-900">
-            <img
-              src={preview}
-              alt={fileName}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-              <button
-                onClick={() => setPreviewOpen(true)}
-                className="bg-white/90 hover:bg-white text-slate-900 p-2 rounded-full transition-all"
-              >
-                <Maximize2 className="w-4 h-4" />
-              </button>
-              {isUploaded && (
-                <a
-                  href={file.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="bg-white/90 hover:bg-white text-slate-900 p-2 rounded-full transition-all"
-                >
-                  <Download className="w-4 h-4" />
-                </a>
-              )}
-            </div>
-          </div>
+    <div
+      onClick={handleOpen}
+      className="cursor-pointer group bg-white rounded-xl border border-slate-200 hover:border-indigo-400 hover:shadow-lg transition-all overflow-hidden"
+    >
+      <div className="h-32 w-full bg-slate-100 flex items-center justify-center overflow-hidden">
+        {isImage ? (
+          <img
+            src={previewUrl || FALLBACK_IMAGE}
+            onError={(e) => (e.target.src = FALLBACK_IMAGE)}
+            alt={fileName}
+            className="w-full h-full object-cover"
+          />
+        ) : isPDF ? (
+          <img
+            src={FALLBACK_IMAGE}
+            alt="PDF fallback"
+            className="w-full h-full object-cover"
+          />
         ) : (
-          <div className="h-32 flex items-center justify-center bg-gradient-to-br from-indigo-50 to-purple-50">
-            <div className="text-indigo-400">{getFileIcon()}</div>
-          </div>
-        )}
-
-        <div className="p-3">
-          <div className="flex items-start justify-between gap-2">
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-slate-700 truncate mb-1">
-                {fileName}
-              </p>
-              <p className="text-xs text-slate-500">
-                {formatFileSize(fileSize)}
-              </p>
-            </div>
-            {!isUploaded && (
-              <button
-                onClick={() => onRemove(index)}
-                className="text-red-500 hover:text-red-700 hover:bg-red-50 p-1.5 rounded-lg transition-all flex-shrink-0"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            )}
-          </div>
-        </div>
-
-        {!isUploaded && (
-          <div className="absolute top-2 right-2 bg-emerald-500 text-white text-xs px-2 py-1 rounded-full font-semibold flex items-center gap-1">
-            <CheckCircle2 className="w-3 h-3" />
-            Ready
-          </div>
+          <img
+            src={FALLBACK_IMAGE}
+            alt="File fallback"
+            className="w-full h-full object-cover"
+          />
         )}
       </div>
 
-      {previewOpen && (
-        <ImagePreviewModal
-          imageUrl={preview}
-          onClose={() => setPreviewOpen(false)}
-        />
-      )}
-    </>
+      <div className="p-3 flex justify-between items-start gap-2">
+        <div className="min-w-0">
+          <p className="text-sm font-semibold text-slate-700 truncate">
+            {fileName}
+          </p>
+          <p className="text-xs text-slate-500">
+            {(file.size / 1024).toFixed(1)} KB
+          </p>
+        </div>
+
+        {!isUploaded && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemove(index);
+            }}
+            className="text-red-500 hover:text-red-700 p-1 rounded-md"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        )}
+      </div>
+    </div>
   );
 };
 
@@ -430,7 +438,7 @@ export default function BlogPlatform() {
                     Full Name *
                   </label>
                   <input
-                    placeholder="Jane Doe"
+                    placeholder="Your Name"
                     className="w-full bg-slate-50 border-2 border-slate-200 focus:border-indigo-500 focus:bg-white rounded-2xl px-5 py-3.5 transition-all outline-none font-medium"
                     value={blogForm.authorName}
                     onChange={(e) =>
@@ -444,7 +452,7 @@ export default function BlogPlatform() {
                   </label>
                   <input
                     type="email"
-                    placeholder="jane@example.com"
+                    placeholder="youremail@iiti.ac.in"
                     className="w-full bg-slate-50 border-2 border-slate-200 focus:border-indigo-500 focus:bg-white rounded-2xl px-5 py-3.5 transition-all outline-none font-medium"
                     value={blogForm.authorEmail}
                     onChange={(e) =>

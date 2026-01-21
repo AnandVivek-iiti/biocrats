@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, LogOut, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import logo from "../assets/logo.png";
 import iiti from "../assets/iiti_logo.png";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeSection, setActiveSection] = useState("Home");
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
-  const Backend_Url = import.meta.env.VITE_API_URL || "https://biocrats.onrender.com";
-  const API_URL = `${Backend_Url}/api`;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,7 +44,7 @@ const Navbar = () => {
             rect.bottom >= navbarHeight + 50
           ) {
             setActiveSection(
-              section.charAt(0).toUpperCase() + section.slice(1)
+              section.charAt(0).toUpperCase() + section.slice(1),
             );
             break;
           }
@@ -60,35 +55,33 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScrollSpy);
   }, [location.pathname]);
 
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
   const navItems = [
     { name: "Home", href: "#home" },
     { name: "Events", href: "#events" },
     { name: "About Us", href: "#about" },
-    { name: "Projects", href: "#projects" },
     { name: "Team", href: "#team" },
     { name: "Alumni", href: "#alumni" },
     { name: "Gallery", href: "#gallery" },
     { name: "Blog", href: "#blog" },
     { name: "Contact Us", href: "#contact" },
   ];
-
-  const handleNavClick = (item, e) => {
-    e.preventDefault();
-    setIsMenuOpen(false);
-
-    if (item.isRoute) {
-      navigate(item.href);
-      setActiveSection(item.name);
-    } else {
-      setActiveSection(item.name);
-      if (location.pathname !== "/") {
-        navigate("/");
-        setTimeout(() => scrollToSection(item.href), 100);
-      } else {
-        scrollToSection(item.href);
-      }
-    }
-  };
 
   const scrollToSection = (href) => {
     const targetId = href.substring(1);
@@ -101,194 +94,231 @@ const Navbar = () => {
     }
   };
 
-  const handleAuthClick = (path) => {
+  const handleNavClick = (item) => {
+    setActiveSection(item.name);
     setIsMenuOpen(false);
-    setIsUserMenuOpen(false);
-    navigate(path);
-  };
 
-  const fetchCurrentUser = async (token) => {
-    try {
-      const response = await fetch(`${API_URL}/profile`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setCurrentUser(data.user);
-        setIsAuthenticated(true);
-      } else {
-        localStorage.removeItem("token");
-      }
-    } catch (err) {
-      console.error("Error fetching user:", err);
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => scrollToSection(item.href), 100);
+    } else {
+      scrollToSection(item.href);
     }
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) fetchCurrentUser(token);
-  }, [API_URL]);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsAuthenticated(false);
-    setCurrentUser(null);
-    setIsUserMenuOpen(false);
+  const toggleMobileMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   const mobileMenuVariants = {
     closed: {
-      opacity: 0,
-      height: 0,
-      transition: { duration: 0.3, ease: "easeInOut" },
+      x: "100%",
+      transition: {
+        type: "tween",
+        duration: 0.3,
+        ease: "easeInOut"
+      },
     },
     open: {
-      opacity: 1,
-      height: "auto",
+      x: 0,
       transition: {
+        type: "tween",
         duration: 0.3,
         ease: "easeInOut",
-        staggerChildren: 0.05,
-        delayChildren: 0.1,
+        staggerChildren: 0.07,
+        delayChildren: 0.2,
       },
     },
   };
 
   const mobileItemVariants = {
-    closed: { x: -20, opacity: 0 },
+    closed: { x: 50, opacity: 0 },
     open: { x: 0, opacity: 1 },
   };
 
+  const overlayVariants = {
+    closed: { opacity: 0 },
+    open: { opacity: 1 },
+  };
+
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`sticky top-0 z-50 w-full transition-all duration-300 border-b ${
-        isScrolled
-          ? "bg-white/90 backdrop-blur-md border-slate-200 shadow-sm"
-          : "bg-white border-transparent shadow-none"
-      }`}
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo Section */}
-          <div className="flex-shrink-0 flex items-center gap-4">
-            <a
-              href="/"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate("/");
-                window.scrollTo(0, 0);
-              }}
-              className="flex items-center gap-3 group"
-            >
-              <img
-                src={logo}
-                alt="Biocrats Logo"
-                className="h-10 w-10 md:h-12 md:w-12 object-contain transition-transform group-hover:scale-105"
-              />
-              <div className="flex flex-col">
-                <span className="text-xl md:text-2xl font-bold text-slate-900 tracking-tight leading-none group-hover:text-blue-700 transition-colors">
-                  BioCrats Club
-                </span>
-                <span className="text-[10px] md:text-xs font-medium text-slate-500 tracking-wider uppercase">
-                  IIT Indore
-                </span>
-              </div>
-            </a>
-          </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={(e) => handleNavClick(item, e)}
-                className={`relative px-3 py-2 text-m font-medium transition-colors duration-200 rounded-md hover:bg-slate-50 ${
-                  activeSection === item.name
-                    ? "text-blue-700"
-                    : "text-slate-600 hover:text-slate-900"
-                }`}
+    <>
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+        className={`sticky top-0 z-50 w-full transition-all duration-300 border-b ${
+          isScrolled
+            ? "bg-white/90 backdrop-blur-md border-slate-200 shadow-sm"
+            : "bg-white border-transparent shadow-none"
+        }`}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo Section */}
+            <div className="flex-shrink-0 flex items-center gap-4">
+              <button
+                onClick={() => {
+                  navigate("/");
+                  window.scrollTo(0, 0);
+                  setIsMenuOpen(false);
+                }}
+                className="flex items-center gap-3 group"
               >
-                {item.name}
-                {activeSection === item.name && (
-                  <motion.div
-                    layoutId="desktop-navbar-underline"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"
-                    initial={false}
-                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                  />
-                )}
-              </a>
-            ))}
-          </nav>
-
-          {/* Right side - IITI Logo and Auth */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            {/* IITI Logo */}
-            <a
-              href="https://iiti.ac.in"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group cursor-pointer"
-            >
-              <div className="relative">
-                <div className="absolute inset-0 bg-[#1173d4]/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <img
-                  className="h-8 w-8 sm:h-12 sm:w-12 relative z-10 transition-transform duration-300 group-hover:scale-110 "
-                  src={iiti}
-                  alt="IIT Indore Logo"
+                  src={logo}
+                  alt="Biocrats Logo"
+                  className="h-10 w-10 md:h-12 md:w-12 object-contain transition-transform group-hover:scale-105"
                 />
-              </div>
-            </a>
+                <div className="flex flex-col">
+                  <span className="text-xl md:text-2xl font-bold text-slate-900 tracking-tight leading-none group-hover:text-blue-700 transition-colors">
+                    BioCrats Club
+                  </span>
+                  <span className="text-[10px] md:text-xs font-medium text-slate-500 tracking-wider uppercase">
+                    IIT Indore
+                  </span>
+                </div>
+              </button>
+            </div>
 
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-all duration-300 hover:scale-110 active:scale-95"
-              aria-label="Toggle menu"
-            >
-            </button>
-
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Dropdown Menu (Accordion Style) */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            variants={mobileMenuVariants}
-            initial="closed"
-            animate="open"
-            exit="closed"
-            className="lg:hidden overflow-hidden bg-white border-b border-slate-100 shadow-lg"
-          >
-            <div className="container mx-auto px-4 py-4 space-y-1">
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => (
-                <motion.a
+                <button
                   key={item.name}
-                  href={item.href}
-                  variants={mobileItemVariants}
-                  onClick={(e) => handleNavClick(item, e)}
-                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-all ${
+                  onClick={() => handleNavClick(item)}
+                  className={`relative px-3 py-2 text-m font-medium transition-colors duration-200 rounded-md hover:bg-slate-50 ${
                     activeSection === item.name
-                      ? "bg-blue-50 text-blue-700"
-                      : "text-slate-600 hover:bg-slate-50 hover:pl-6"
+                      ? "text-blue-700"
+                      : "text-slate-600 hover:text-slate-900"
                   }`}
                 >
                   {item.name}
-                </motion.a>
+                  {activeSection === item.name && (
+                    <motion.div
+                      layoutId="desktop-navbar-underline"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    />
+                  )}
+                </button>
               ))}
+            </nav>
 
+            {/* Right side - IITI Logo and Mobile Menu */}
+            <div className="flex items-center gap-3 sm:gap-4">
+              {/* IITI Logo */}
+              <a
+                href="https://iiti.ac.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group cursor-pointer"
+              >
+                <div className="relative">
+                  <div className="absolute inset-0 bg-[#1173d4]/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <img
+                    className="h-8 w-8 sm:h-12 sm:w-12 relative z-10 transition-transform duration-300 group-hover:scale-110"
+                    src={iiti}
+                    alt="IIT Indore Logo"
+                  />
+                </div>
+              </a>
+
+              {/* Mobile Menu Button */}
+              <button
+                type="button"
+                onClick={toggleMobileMenu}
+                className="lg:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-all duration-300 hover:scale-110 active:scale-95 z-50"
+                aria-label="Toggle menu"
+                aria-expanded={isMenuOpen}
+              >
+                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
             </div>
-          </motion.div>
+          </div>
+        </div>
+      </motion.header>
+
+      {/* Full Screen Mobile Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <>
+            {/* Overlay */}
+            <motion.div
+              variants={overlayVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+              onClick={() => setIsMenuOpen(false)}
+            />
+
+            {/* Mobile Menu Panel */}
+            <motion.div
+              variants={mobileMenuVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              className="fixed top-0 right-0 bottom-0 w-full sm:w-80 bg-white shadow-2xl z-50 lg:hidden overflow-y-auto"
+            >
+              <div className="flex flex-col h-full">
+                {/* Menu Header */}
+                <div className="flex items-center justify-between p-6 border-b border-slate-200">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={logo}
+                      alt="Biocrats Logo"
+                      className="h-10 w-10 object-contain"
+                    />
+                    <div className="flex flex-col">
+                      <span className="text-lg font-bold text-slate-900">
+                        BioCrats Club
+                      </span>
+                      <span className="text-xs font-medium text-slate-500 uppercase">
+                        IIT Indore
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setIsMenuOpen(false)}
+                    className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors"
+                    aria-label="Close menu"
+                  >
+                    <X size={24} />
+                  </button>
+                </div>
+
+                {/* Menu Items */}
+                <nav className="flex-1 p-6">
+                  <div className="space-y-2">
+                    {navItems.map((item, index) => (
+                      <motion.button
+                        key={item.name}
+                        variants={mobileItemVariants}
+                        onClick={() => handleNavClick(item)}
+                        className={`w-full text-left px-4 py-4 rounded-xl text-lg font-medium transition-all ${
+                          activeSection === item.name
+                            ? "bg-blue-600 text-white shadow-lg shadow-blue-600/30"
+                            : "text-slate-700 hover:bg-slate-100 active:bg-slate-200"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span>{item.name}</span>
+
+                        </div>
+                      </motion.button>
+                    ))}
+                  </div>
+                </nav>
+
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
-    </motion.header>
+    </>
   );
 };
 

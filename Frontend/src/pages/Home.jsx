@@ -133,8 +133,8 @@ export default function BiocratsClub() {
 
               <motion.div variants={textVariants} className="flex flex-col sm:flex-row gap-5 justify-center">
                 <a
-                  href="#projects"
-                  className="group relative px-8 py-4 bg-blue-600 rounded-full font-bold text-white overflow-hidden shadow-[0_0_20px_rgba(37,99,235,0.5)] transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(37,99,235,0.7)]"
+                  href="#blog"
+                  className="group relative px-10 py-4 bg-blue-600 rounded-full font-bold text-white overflow-hidden shadow-[0_0_20px_rgba(37,99,235,0.5)] transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(37,99,235,0.7)]"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     Explore Our Work <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform"/>

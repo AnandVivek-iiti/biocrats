@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { X, ZoomIn, ChevronLeft, ChevronRight } from "lucide-react";
 import Workshop from "../assets/Events/Workshop.png";
-import featured from "../assets/Events/Feature.png";
 import Sci5 from "../assets/Events/Sci5.png";
 import Techexpo from "../assets/Events/Techexpo.png";
 import Fusion from "../assets/Events/Fusion.png";
@@ -19,7 +18,7 @@ const BiocratGalleryPage = () => {
 
   const galleryImages = [
     image1 ,  image2 ,  image3 ,  image4 ,
-    image5 ,  image6 ,  Fusion , Techexpo , Sci5 ,Workshop , featured
+    image5 ,  image6 ,  Fusion , Techexpo , Sci5 ,Workshop
      ];
 
   const openImage = (image, index) => {

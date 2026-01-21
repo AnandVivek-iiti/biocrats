@@ -4,7 +4,7 @@ import Raza from "../../assets/core/Raza.jpg";
 import Pooja from "../../assets/core/Pooja.jpg";
 import Ayushi from "../../assets/core/Ayushi.jpg";
 import Shudh from "../../assets/core/Shudh.jpg";
-import Viraj from "../../assets/core/Viraj.jpg";
+import Viraj from "../../assets/core/Viraj.jpeg";
 export const members = [
   {
     name: "Anand  Vivek",
