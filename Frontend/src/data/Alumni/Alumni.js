@@ -216,5 +216,95 @@ export const alumniData = [
     linkedin:
       "https://www.linkedin.com/in/mahesh-sahu-92b08826b/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BY58zB%2BLUTwidTpsR435%2BAg%3D%3D",
   },
+{
+  id: 22,
+  name: "Ritika Rawat",
+  email: "",
+  year: "2025",
+  program: "M.Sc.",
+  jobRole: "PhD Scholar",
+  category: "research",
+  linkedin: "https://www.linkedin.com/in/ritika-rawat-b39120288/"
+},
+{
+  id: 23,
+  name: "Srija Mukherjee",
+  email: "",
+  year: "2025",
+  program: "M.Sc.",
+  jobRole: "PhD Scholar at IIT Indore",
+  category: "research",
+  linkedin: "https://www.linkedin.com/in/srija-mukherjee-687a3621b/"
+},
+{
+  id: 24,
+  name: "Rachayita Das",
+  email: "",
+  year: "2025",
+  program: "M.Sc.",
+  jobRole: "PhD Scholar at IIT Kharagpur",
+  category: "research",
+  linkedin: "https://www.linkedin.com/in/rachayita-das-21891626b/"
+},
+{
+  id: 25,
+  name: "Annu Rani",
+  email: "",
+  year: "2025",
+  program: "PhD",
+  jobRole: "Postdoctoral Fellow at University of Pittsburgh",
+  category: "research",
+  linkedin: "https://www.linkedin.com/in/annu-rani-91620a189/"
+},
+{
+  id: 26,
+  name: "Vedant Salve",
+  email: "",
+  year: "",
+  program: "M.Sc.",
+  jobRole: "Faculty",
+  category: "academia",
+  linkedin: "https://www.linkedin.com/in/vedant-salve-9315a1207/"
+},
+{
+  id: 27,
+  name: "Akshay Mehta",
+  email: "",
+  year: "",
+  program: "M.Sc.",
+  jobRole: "Faculty",
+  category: "academia",
+  linkedin: "https://www.linkedin.com/in/akshaymehta1304/"
+},
+{
+  id: 28,
+  name: "Akanksha Tiwari",
+  email: "",
+  year: "",
+  program: "PhD",
+  jobRole: "Assistant Scientist at Megin",
+  category: "industry",
+  linkedin: "https://www.linkedin.com/in/akanksha-tiwari-phd-3b6202a9/"
+},
+{
+  id: 29,
+  name: "Kanika Singh",
+  email: "",
+  year: "2019",
+  program: "M.Sc.",
+  jobRole: "PhD Scholar in Biology at IISER Pune",
+  category: "research",
+  linkedin: "https://www.linkedin.com/in/kanika-singh-7957a616a/"
+},
+{
+  id: 30,
+  name: "Isha Dhingra",
+  email: "",
+  year: "2023",
+  program: "M.Sc.",
+  jobRole: "AGNEXT",
+  category: "industry",
+  linkedin: "https://www.linkedin.com/in/isha-dhingra-0991771b3/"
+}
 
 ];
