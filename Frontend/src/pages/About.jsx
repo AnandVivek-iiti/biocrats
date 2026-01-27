@@ -6,7 +6,9 @@ import {
   Award,
   TrendingUp,
   Sparkles,
+  Palette,
 } from "lucide-react";
+import logo from "../assets/logo.png";
 
 const BiocratAboutPage = () => {
   const coreValues = [
@@ -47,6 +49,7 @@ const BiocratAboutPage = () => {
       {/* Main Content */}
       <main className="px-4 sm:px-6 lg:px-8 py-20">
         <div className="max-w-6xl mx-auto">
+
           {/* History Section */}
           <div className="mb-24">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -78,37 +81,62 @@ const BiocratAboutPage = () => {
               </div>
               <div className="relative group">
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
-                <div
-                  className="relative w-full h-80 lg:h-96 bg-center bg-cover rounded-2xl shadow-xl transform group-hover:scale-[1.02] transition duration-300"
-                  style={{
-                    backgroundImage:
-                      'url("https://lh3.googleusercontent.com/aida-public/AB6AXuCwA-ucNHARD-w3eHuHF4InRTGhQ2Gjt_v5GpEl0pDCa3BWOs1bv1ts6pxYhbF0Kkn3oZhmooYJmkpaFVr1kfdbz-B6yCNl3Bh334CByaVo9ft5PCBE9CiGqtMIAxs4jL47qVxLP0Oz-mmcG59MT0RXw9sdJrUHXC72HC0HogH7C9weN1Vi5YzL69IKGu3ECQBrNZ0GkyoIzpe_cQRxdntcwm5u8HxI_Ta8Mu7WtPzRQZI9HcVCaS-9ExumiuR1vn4c1259AA71uJnV")',
-                  }}
+                <img
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwA-ucNHARD-w3eHuHF4InRTGhQ2Gjt_v5GpEl0pDCa3BWOs1bv1ts6pxYhbF0Kkn3oZhmooYJmkpaFVr1kfdbz-B6yCNl3Bh334CByaVo9ft5PCBE9CiGqtMIAxs4jL47qVxLP0Oz-mmcG59MT0RXw9sdJrUHXC72HC0HogH7C9weN1Vi5YzL69IKGu3ECQBrNZ0GkyoIzpe_cQRxdntcwm5u8HxI_Ta8Mu7WtPzRQZI9HcVCaS-9ExumiuR1vn4c1259AA71uJnV"
+                  alt="Biocrats History"
+                  loading="lazy"
+                  className="relative w-full h-80 lg:h-96 object-cover rounded-2xl shadow-xl transform group-hover:scale-[1.02] transition duration-300"
                 />
               </div>
             </div>
           </div>
-          {/* logo */}
-          <div className="logo-history">
-            <div className="mb-24">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div className="space-y-6">
-                  <div className="inline-block">
-                    <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider bg-blue-50 px-4 py-2 rounded-full"></span>
+
+          {/* Logo Credit Section - Redesigned */}
+          <div className="mb-24 bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-100">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="order-2 lg:order-1 space-y-6">
+                <div className="flex items-center gap-3">
+                  
+                  <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">
+                    Visual Identity
+                  </span>
+                </div>
+                <div className="prose prose-slate lg:prose-lg max-w-none">
+                  <p className="text-slate-600 leading-relaxed italic border-l-4 border-blue-200 pl-4">
                     "Where engineering ingenuity meets biological innovation:
                     Presenting the Official Logo of the Biocrats Club, IIT
-                    Indore!" This logo beautifully captures the essence of the
+                    Indore!"
+                  </p>
+                  <p className="text-slate-600 leading-relaxed">
+                    This logo beautifully captures the essence of the
                     Biocrats Club, IIT Indore, symbolizing the union of biology
                     and technology. The DNA helix at the center reflects the
                     core of life sciences, while the surrounding icons represent
                     the diverse fields of biomedical engineering and
                     biosciences—spanning from computational biology and
                     microscopy to molecular chemistry and healthcare innovation.
+                  </p>
+                  <p className="text-slate-600 leading-relaxed">
                     It is a testament to interdisciplinary collaboration and a
                     commitment to advancing science for a better tomorrow.
-                    🌱🔬✨ Logo Credit: Nandini S. (MTech in Biomedical
-                    Engineering)
-                  </div>
+                  </p>
+                </div>
+                <div className="pt-4 flex items-center gap-4">
+                  <div className="h-px flex-1 bg-slate-100"></div>
+                  <span className="text-sm font-medium text-slate-500 bg-slate-50 px-3 py-1 rounded-md">
+                    🌱🔬✨ Logo Credit: Nandini S. (MTech in Biomedical Engineering)
+                  </span>
+                  <div className="h-px flex-1 bg-slate-100"></div>
+                </div>
+              </div>
+              <div className="order-1 lg:order-2 flex justify-center">
+                <div className="relative w-64 h-64 md:w-80 md:h-80">
+                  <img
+                    src={logo}
+                    alt="Official Biocrats Logo"
+                    loading="lazy"
+                    className="absolute inset-8 w-48 h-48 md:w-64 md:h-64 object-contain mx-auto"
+                  />
                 </div>
               </div>
             </div>
@@ -119,12 +147,11 @@ const BiocratAboutPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="relative group lg:order-1">
                 <div className="absolute -inset-1 bg-gradient-to-r from-indigo-600 to-blue-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
-                <div
-                  className="relative w-full h-80 lg:h-96 bg-center bg-cover rounded-2xl shadow-xl transform group-hover:scale-[1.02] transition duration-300"
-                  style={{
-                    backgroundImage:
-                      'url("https://lh3.googleusercontent.com/aida-public/AB6AXuByaVbab5I8S3S2U4HPtAkmFNnBF9GfqNfhKmBaJcCZVCtvfopUGvXVzNwC-_Lnhvq4ihjfA7Zkdho-ceuxthkLKvGNvpR9KWMD2mDcc1pslnVFi1rC8xSikgW7k0bq3HnyAxvnkPFWMnDM75ugL4vQRhGSd3r6P7TFhT-_hvldq0bhVJhEtq_Jfaxn4rlg1aGMgZdVmBzQowD_kcjt7RM4q2-xR2LDaj0gcBjKVnCMlzzH3ZH0UdQm30i2wE_fyjHQRvCZ3oLabdyy")',
-                  }}
+                <img
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuByaVbab5I8S3S2U4HPtAkmFNnBF9GfqNfhKmBaJcCZVCtvfopUGvXVzNwC-_Lnhvq4ihjfA7Zkdho-ceuxthkLKvGNvpR9KWMD2mDcc1pslnVFi1rC8xSikgW7k0bq3HnyAxvnkPFWMnDM75ugL4vQRhGSd3r6P7TFhT-_hvldq0bhVJhEtq_Jfaxn4rlg1aGMgZdVmBzQowD_kcjt7RM4q2-xR2LDaj0gcBjKVnCMlzzH3ZH0UdQm30i2wE_fyjHQRvCZ3oLabdyy"
+                  alt="Biocrats Vision"
+                  loading="lazy"
+                  className="relative w-full h-80 lg:h-96 object-cover rounded-2xl shadow-xl transform group-hover:scale-[1.02] transition duration-300"
                 />
               </div>
 

@@ -31,7 +31,7 @@ export default function NotFound() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-800 overflow-hidden relative flex items-center justify-center">
-      {/* Animated background stars */}
+     
       <div className="absolute inset-0">
         {stars.map((star, i) => (
           <div

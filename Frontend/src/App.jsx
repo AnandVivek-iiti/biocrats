@@ -1,29 +1,28 @@
 import "./App.css";
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
-/* Layout Components */
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import PageLoader from "./components/PageLoader";
 
-/* Pages */
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Events from "./pages/Events";
-import AlumniDirectory from "./pages/Alumni";
-import Gallery from "./pages/Gallery";
-import BiocratTeamPage from "./pages/Team";
-import ContactUs from "./pages/Contact";
-import Blogs from "./pages/Blogs";
-import AdminPanel from "./pages/Adminpannel";
-import NotFound from "./components/Notfound";
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Events = lazy(() => import("./pages/Events"));
+const AlumniDirectory = lazy(() => import("./pages/Alumni"));
+const Gallery = lazy(() => import("./pages/Gallery"));
+const BiocratTeamPage = lazy(() => import("./pages/Team"));
+const ContactUs = lazy(() => import("./pages/Contact"));
+const Blogs = lazy(() => import("./pages/Blogs"));
+const AdminPanel = lazy(() => import("./pages/Adminpannel"));
+const NotFound = lazy(() => import("./components/Notfound"));
+const DevelopersSection = lazy(() =>
+  import("./components/Footer").then((m) => ({
+    default: m.DevelopersSection,
+  }))
+);
 
-import { DevelopersSection } from "./components/Footer";
-
-/* =========================
-   PUBLIC LAYOUT (HOME SITE)
-   ========================= */
 function PublicLayout() {
   useEffect(() => {
     const handleSmoothScroll = (e) => {
@@ -38,14 +37,17 @@ function PublicLayout() {
 
         const navbarHeight = 80;
         if (targetElement) {
-          const targetPosition = targetElement.offsetTop - navbarHeight;
-          window.scrollTo({ top: targetPosition, behavior: "smooth" });
+          window.scrollTo({
+            top: targetElement.offsetTop - navbarHeight,
+            behavior: "smooth",
+          });
         }
       }
     };
 
     document.addEventListener("click", handleSmoothScroll);
-    return () => document.removeEventListener("click", handleSmoothScroll);
+    return () =>
+      document.removeEventListener("click", handleSmoothScroll);
   }, []);
 
   return (
@@ -54,58 +56,56 @@ function PublicLayout() {
       <Navbar />
 
       <main>
-        <section id="home">
-          <Home />
-        </section>
+        <Suspense fallback={<PageLoader />}>
+          <section id="home">
+            <Home />
+          </section>
 
-        <section id="events">
-          <Events />
-        </section>
+          <section id="events">
+            <Events />
+          </section>
 
-        <section id="about">
-          <About />
-        </section>
+          <section id="about">
+            <About />
+          </section>
 
-        <section id="team">
-          <BiocratTeamPage />
-        </section>
+          <section id="team">
+            <BiocratTeamPage />
+          </section>
 
-        <section id="alumni">
-          <AlumniDirectory />
-        </section>
+          <section id="alumni">
+            <AlumniDirectory />
+          </section>
 
-        <section id="gallery">
-          <Gallery />
-        </section>
+          <section id="gallery">
+            <Gallery />
+          </section>
 
-        <section id="blog">
-          <Blogs />
-        </section>
+          <section id="blog">
+            <Blogs />
+          </section>
 
-        <section id="contact">
-          <ContactUs />
-        </section>
+          <section id="contact">
+            <ContactUs />
+          </section>
+        </Suspense>
       </main>
 
       <Footer />
     </>
   );
 }
-
-/* =========================
-   APP ROUTER
-   ========================= */
 function App() {
   return (
     <HashRouter>
-      <Routes>
-        <Route path="/" element={<PublicLayout />} />
-
-        <Route path="/admin" element={<AdminPanel />} />
-        <Route path="/developer" element={<DevelopersSection />} />
-
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route path="/" element={<PublicLayout />} />
+          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/developer" element={<DevelopersSection />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </HashRouter>
   );
 }
